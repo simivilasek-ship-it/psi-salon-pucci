@@ -1526,7 +1526,7 @@ body:has(.menu-check:checked) .fab {
   .hero {
     flex-direction: row;
     align-items: center;
-    min-height: 840px;
+    min-height: 920px;
     padding-top: 96px;
     overflow: hidden;
   }
@@ -1560,6 +1560,7 @@ body:has(.menu-check:checked) .fab {
 
   .hero-shell {
     padding: 56px 24px;
+    transform: translateY(-48px);
   }
 
   .hero-copy {
