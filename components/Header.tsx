@@ -10,19 +10,21 @@ export function Header() {
       <div className="bar-inner">
         <a className="wordmark" href={withBase("/#uvod")}>
           <img
+            className="wordmark-img wordmark-img-dark"
             src={withBase("/logo.png?v=3")}
             alt="Psí salon Pucci"
             width={493}
             height={291}
           />
+          <img
+            className="wordmark-img wordmark-img-light"
+            src={withBase("/logo-white.png?v=3")}
+            alt=""
+            width={493}
+            height={291}
+            aria-hidden="true"
+          />
         </a>
-        <label className="menu-toggle">
-          <input id="nav-toggle" className="menu-check" type="checkbox" />
-          <span className="sr-only">Menu</span>
-          <span className="burger" />
-          <span className="burger" />
-          <span className="burger" />
-        </label>
         <nav aria-label="Hlavní navigace">
           <ul className="nav-links">
             {nav.map((item) => (
@@ -39,6 +41,15 @@ export function Header() {
             </li>
           </ul>
         </nav>
+        <label className="menu-toggle" aria-label="Menu">
+          <input id="nav-toggle" className="menu-check" type="checkbox" />
+          <span className="sr-only">Otevřít nebo zavřít menu</span>
+          <span className="burger-box" aria-hidden="true">
+            <span className="burger burger-1" />
+            <span className="burger burger-2" />
+            <span className="burger burger-3" />
+          </span>
+        </label>
       </div>
     </header>
   );

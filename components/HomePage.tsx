@@ -58,7 +58,7 @@ export function HomePage() {
               <a className="btn btn-solid" href={BOOKING_URL}>
                 Rezervovat termín
               </a>
-              <a className="btn btn-outline" href={`tel:${PHONE_TEL}`}>
+              <a className="btn btn-outline hero-call" href={`tel:${PHONE_TEL}`}>
                 Zavolat {PHONE_DISPLAY}
               </a>
             </div>
