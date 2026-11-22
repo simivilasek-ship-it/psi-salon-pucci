@@ -1,0 +1,113 @@
+/** Verified copy from the approved draft. Prices stay as Klára's placeholder. */
+
+export const PHONE_TEL = "+420722447002";
+export const PHONE_DISPLAY = "722\u00A0447\u00A0002";
+export const EMAIL = "psisalon.pucci@gmail.com";
+export const BOOKING_URL = "https://psi-salon-pucci.reservio.com";
+export const STREET = "náměstí Míru 69/25";
+export const CITY = "Svitavy";
+export const OWNER = "Klára Zelinka, DiS";
+export const ICO = "21618241";
+export const PRICE_TBA = "[ceník doplní Klára]";
+
+export const nav = [
+  { href: "/#o-mne", label: "O mně" },
+  { href: "/#sluzby", label: "Služby" },
+  { href: "/#cenik", label: "Ceník" },
+  { href: "/#galerie", label: "Galerie" },
+  { href: "/#kontakt", label: "Kontakt" },
+] as const;
+
+export const about = [
+  "Jsem zakladatelkou Psího salonu Pucci, který nese jméno po mém čtyřnohém parťákovi.",
+  "Pejsky miluji už od dětství a práce s nimi se pro mě stala splněným snem. Abych jim mohla poskytnout tu nejlepší péči, absolvovala jsem v roce 2023 rekvalifikační kurz střihačky psů v Psím salonu Fatima.",
+  "Ve svém oboru se neustále vzdělávám, zdokonaluji své dovednosti a účastním se odborných kurzů a seminářů. Věřím totiž, že je stále co se učit a že každý nový poznatek pomáhá poskytovat ještě lepší péči.",
+  "Věřím, že každý pejsek i kočička si zaslouží individuální přístup, trpělivost a laskavou péči. Záleží mi na tom, aby se u nás cítili příjemně a odcházeli nejen krásně upravení, ale především spokojení.",
+  "Budu se těšit na vás i vaše čtyřnohé kamarády.",
+] as const;
+
+export const certificates = [
+  {
+    name: "cert1" as const,
+    alt: "Osvědčení: Veterinární minimum II pro specialisty na střihovou úpravu psů, Klára Zelinka, DiS",
+  },
+  {
+    name: "cert2" as const,
+    alt: "Osvědčení: Veterinární minimum pro specialisty na střihovou úpravu psů, Klára Zelinka, DiS",
+  },
+  {
+    name: "cert3" as const,
+    alt: "Osvědčení z odborného semináře Dentální hygiena, Klára Zelinka",
+  },
+] as const;
+
+export const servicesIntro =
+  "Přijímáme psy všech plemen a velikostí. Do salonu přijímáme i kočky. Celková úprava zahrnuje koupání, fénování, rozčesání, střih nebo vyčesávání srsti, stříhání drápků, čištění uší. Na přání majitele také čištění análních žlázek.";
+
+export const services = [
+  {
+    title: "Koupání, fénování",
+    text: "Použití kvalitní kosmetiky, vysušení srsti a pečlivé rozčesání.",
+  },
+  {
+    title: "Stříhání",
+    text: "Dle plemene, přání majitele.",
+  },
+  {
+    title: "Vyčesání srsti",
+    text: "Odstranění staré srsti krátkosrstých a dlouhosrstých plemen, která se nestříhají.",
+  },
+  {
+    title: "Další služby",
+    text: "Stříhání drápků, čištění a depilace uší, čištění análních žláz.",
+  },
+  {
+    title: "Trimování",
+    wide: true,
+    text: "Speciální úprava srsti hrubosrstých plemen psů. Spočívá ve vytrhávání odumřelé srsti, která sama nevypadá. Díky trimování srst hrubne a stává se odolnější vůči vlivům okolí. Pokud se hrubosrsté plemeno ostříhá, jeho srst plstnatí a ztrácí svou ochrannou funkci.",
+    note: "Pes by neměl být vykoupaný před trimováním minimálně 4 týdny. Pes je po trimování vykoupán šamponem vhodným pro trimování, aby se srst a kůže zbavila všech nečistot.",
+  },
+  {
+    title: "Dentální hygiena bez anestezie",
+    wide: true,
+    text: "Dentální hygiena spočívá v odstranění plaku na zubech za použití ultrazvukového kartáčku s následným mechanickým očištěním. Působí preventivně proti zánětu dásní, vzniku paradontózy, tvorby zubního plaku, následně kamene a tím zabraňuje vypadávání zubů.",
+    note: "Dentální hygiena rozhodně nenahrazuje veterinární ošetření, je to pouze kosmetický efekt, nikoli léčebný.",
+  },
+] as const;
+
+export const prices = [
+  { service: "Koupání, fénování", price: PRICE_TBA },
+  { service: "Stříhání", price: PRICE_TBA },
+  { service: "Trimování", price: PRICE_TBA },
+  { service: "Vyčesání srsti", price: PRICE_TBA },
+  { service: "Dentální hygiena bez anestezie", price: PRICE_TBA },
+  { service: "Další služby (drápky, uši, anální žlázy)", price: PRICE_TBA },
+  { service: "Rozvoz po Svitavách", price: "100\u00A0Kč" },
+  { service: "Rozvoz do okolních obcí", price: "150\u00A0Kč" },
+] as const;
+
+export const priceNotes = [
+  "Rozvoz platí pro Svitavy a okolí (Hradec nad Svitavou, Vendolí, Radiměř, Opatovec, Koclířov, Javorník,…), pokud se nemáte jak do salonu dostat.",
+  "Platba je možná v\u00A0hotovosti nebo přes QR kód.",
+] as const;
+
+export const notes = [
+  "Psy přijímáme pouze na kompletní úpravu včetně koupání. Bez koupání (psa si vykoupe majitel sám) přijímáme pouze výjimečně po domluvě v případě starého nebo agresivního psa a byla by pro něj návštěva salonu hodně náročná.",
+  "Úprava psa probíhá bez přítomnosti majitele pro lepší průběh celého procesu a kontaktu mezi psem a střihačkou.",
+  "Objednat se můžete telefonicky, přes Messenger, WhatsApp, Instagram nebo rezervační systém Reservio.",
+] as const;
+
+export const gallery = [
+  { name: "g01" as const, alt: "Upravený pejsek v salonu" },
+  { name: "g03" as const, alt: "Bílý pejsek po úpravě" },
+  { name: "g06" as const, alt: "Upravený pejsek na stole salonu" },
+  { name: "g05" as const, alt: "Pejsek po stříhání" },
+  { name: "g04" as const, alt: "Pejsek po vyčesání" },
+  { name: "g09" as const, alt: "Velké plemeno v salonu" },
+  { name: "g10" as const, alt: "Kočička v salonu" },
+  { name: "g12" as const, alt: "Srdce ze srsti po vyčesání", center: true },
+  { name: "g02" as const, alt: "Pejsek v salonu" },
+  { name: "g07" as const, alt: "Jorkšírský teriér po stříhání na stole salonu" },
+  { name: "g08" as const, alt: "Černobílý pejsek s modrou mašlí po úpravě" },
+  { name: "g11" as const, alt: "Tříbarevný dlouhosrstý pejsek po úpravě v salonu" },
+] as const;

@@ -1,0 +1,255 @@
+{
+  "hero": {
+    "variants": [
+      {
+        "src": "/images/hero-480.webp",
+        "width": 480,
+        "height": 429
+      },
+      {
+        "src": "/images/hero-768.webp",
+        "width": 768,
+        "height": 686
+      },
+      {
+        "src": "/images/hero-1120.webp",
+        "width": 1120,
+        "height": 1000
+      },
+      {
+        "src": "/images/hero-1600.webp",
+        "width": 1600,
+        "height": 1429
+      }
+    ]
+  },
+  "portrait": {
+    "variants": [
+      {
+        "src": "/images/portrait-480.webp",
+        "width": 480,
+        "height": 320
+      },
+      {
+        "src": "/images/portrait-800.webp",
+        "width": 800,
+        "height": 533
+      },
+      {
+        "src": "/images/portrait-1200.webp",
+        "width": 1200,
+        "height": 800
+      }
+    ]
+  },
+  "cert1": {
+    "variants": [
+      {
+        "src": "/images/cert1-280.webp",
+        "width": 280,
+        "height": 199
+      },
+      {
+        "src": "/images/cert1-480.webp",
+        "width": 480,
+        "height": 341
+      }
+    ]
+  },
+  "cert2": {
+    "variants": [
+      {
+        "src": "/images/cert2-280.webp",
+        "width": 280,
+        "height": 195
+      },
+      {
+        "src": "/images/cert2-480.webp",
+        "width": 480,
+        "height": 334
+      }
+    ]
+  },
+  "cert3": {
+    "variants": [
+      {
+        "src": "/images/cert3-280.webp",
+        "width": 280,
+        "height": 399
+      },
+      {
+        "src": "/images/cert3-480.webp",
+        "width": 480,
+        "height": 683
+      }
+    ]
+  },
+  "g01": {
+    "variants": [
+      {
+        "src": "/images/g01-400.webp",
+        "width": 400,
+        "height": 518
+      },
+      {
+        "src": "/images/g01-800.webp",
+        "width": 800,
+        "height": 1035
+      }
+    ]
+  },
+  "g02": {
+    "variants": [
+      {
+        "src": "/images/g02-400.webp",
+        "width": 400,
+        "height": 667
+      },
+      {
+        "src": "/images/g02-800.webp",
+        "width": 800,
+        "height": 1333
+      }
+    ]
+  },
+  "g03": {
+    "variants": [
+      {
+        "src": "/images/g03-400.webp",
+        "width": 400,
+        "height": 533
+      },
+      {
+        "src": "/images/g03-800.webp",
+        "width": 800,
+        "height": 1067
+      }
+    ]
+  },
+  "g04": {
+    "variants": [
+      {
+        "src": "/images/g04-400.webp",
+        "width": 400,
+        "height": 548
+      },
+      {
+        "src": "/images/g04-800.webp",
+        "width": 800,
+        "height": 1097
+      }
+    ]
+  },
+  "g05": {
+    "variants": [
+      {
+        "src": "/images/g05-400.webp",
+        "width": 400,
+        "height": 556
+      },
+      {
+        "src": "/images/g05-800.webp",
+        "width": 800,
+        "height": 1112
+      }
+    ]
+  },
+  "g06": {
+    "variants": [
+      {
+        "src": "/images/g06-400.webp",
+        "width": 400,
+        "height": 560
+      },
+      {
+        "src": "/images/g06-800.webp",
+        "width": 800,
+        "height": 1120
+      }
+    ]
+  },
+  "g07": {
+    "variants": [
+      {
+        "src": "/images/g07-400.webp",
+        "width": 400,
+        "height": 510
+      },
+      {
+        "src": "/images/g07-800.webp",
+        "width": 800,
+        "height": 1020
+      }
+    ]
+  },
+  "g08": {
+    "variants": [
+      {
+        "src": "/images/g08-400.webp",
+        "width": 400,
+        "height": 514
+      },
+      {
+        "src": "/images/g08-800.webp",
+        "width": 800,
+        "height": 1027
+      }
+    ]
+  },
+  "g09": {
+    "variants": [
+      {
+        "src": "/images/g09-400.webp",
+        "width": 400,
+        "height": 533
+      },
+      {
+        "src": "/images/g09-800.webp",
+        "width": 800,
+        "height": 1067
+      }
+    ]
+  },
+  "g10": {
+    "variants": [
+      {
+        "src": "/images/g10-400.webp",
+        "width": 400,
+        "height": 533
+      },
+      {
+        "src": "/images/g10-800.webp",
+        "width": 800,
+        "height": 1067
+      }
+    ]
+  },
+  "g11": {
+    "variants": [
+      {
+        "src": "/images/g11-400.webp",
+        "width": 400,
+        "height": 560
+      },
+      {
+        "src": "/images/g11-800.webp",
+        "width": 800,
+        "height": 1120
+      }
+    ]
+  },
+  "g12": {
+    "variants": [
+      {
+        "src": "/images/g12-400.webp",
+        "width": 400,
+        "height": 400
+      },
+      {
+        "src": "/images/g12-800.webp",
+        "width": 800,
+        "height": 800
+      }
+    ]
+  }
+}
