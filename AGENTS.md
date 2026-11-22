@@ -1,7 +1,7 @@
 # Psí salon Pucci
 
 - Dev: `npm run dev`
-- Build: `npm run build` (static export do `out/`)
+- Build: `npm run build` (static export do `out/`). Skript po buildu smaže hydrataci Nextu a nechá JSON-LD plus malý skript menu (`data-keep`).
 - Stack: Next.js App Router, TypeScript, statický export
 - Kanonická adresa: `SITE_URL` v `lib/site.ts` (výchozí `https://simivilasek-ship-it.github.io/psi-salon-pucci`)
 - GitHub Pages: `basePath` `/psi-salon-pucci`, dokud `CUSTOM_DOMAIN` není `true`

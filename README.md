@@ -13,7 +13,7 @@ npm ci
 npm run dev
 ```
 
-Build po `next build` ještě odstraní klientský JavaScript (stránka nemá žádné chování v prohlížeči) a vloží CSS do HTML, aby se hero nenačítalo až za runtime Nextu.
+Build po `next build` odstraní hydratační runtime Nextu, nechá malý skript menu a vloží CSS do HTML, aby se hero nenačítalo až za runtime Nextu.
 
 Lokální build bez prefixu (náhled z `out/`):
 

@@ -25,31 +25,64 @@ for (const old of fs.readdirSync(outDir)) {
 }
 
 const jobs = [
-  { name: "hero", file: "hero.jpg", widths: [480, 768, 1120, 1600], quality: 74 },
+  {
+    name: "hero",
+    file: "aussie.jpg",
+    outPrefix: "hero-aussie",
+    widths: [800, 1200, 1600, 2400],
+    quality: 90,
+    allowUpscale: true,
+  },
   { name: "portrait", file: "o-nas.jpg", widths: [480, 800, 1200], quality: 74 },
   { name: "cert1", file: "cert1.jpg", widths: [280, 480], quality: 68 },
   { name: "cert2", file: "cert2.jpg", widths: [280, 480], quality: 68 },
   { name: "cert3", file: "cert3.jpg", widths: [280, 480], quality: 68 },
-  ...Array.from({ length: 12 }, (_, i) => {
-    const n = String(i + 1).padStart(2, "0");
-    return { name: `g${n}`, file: `g${n}.jpg`, widths: [400, 800], quality: 72 };
-  }),
+  { name: "cert4", file: "cert4.jpg", widths: [280, 480], quality: 68 },
+  { name: "cert5", file: "cert5.jpg", widths: [280, 480], quality: 68 },
+  { name: "cert6", file: "cert6.jpg", widths: [280, 480], quality: 68 },
+  { name: "cert7", file: "cert7.jpg", widths: [280, 480], quality: 68 },
+  // g02, g03, g11 are intentionally skipped (duplicates / AI image / same as hero).
+  ...Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"))
+    .filter((n) => !["02", "03", "11"].includes(n))
+    .map((n) => {
+      const job = { name: `g${n}`, file: `g${n}.jpg`, widths: [400, 800], quality: 72 };
+      // g12: original has white letterbox bars (top ~109px, sides ~14px, bottom ~108px); crop to the photo content.
+      if (n === "12") job.extract = { left: 20, top: 132, width: 1042, height: 836 };
+      return job;
+    }),
 ];
 
 const manifest = {};
 
 for (const job of jobs) {
   const input = path.join(srcDir, job.file);
+  let base = sharp(input).rotate();
+  if (job.extract) {
+    base = sharp(input).rotate().extract(job.extract);
+  } else if (job.cropLeftRatio) {
+    const meta = await sharp(input).rotate().metadata();
+    const left = Math.round(meta.width * job.cropLeftRatio);
+    base = sharp(input)
+      .rotate()
+      .extract({ left, top: 0, width: meta.width - left, height: meta.height });
+  }
+  const fileBase = job.outPrefix || job.name;
   const variants = [];
   for (const width of job.widths) {
-    const pipeline = sharp(input).rotate().resize({ width, withoutEnlargement: true }).webp({
-      quality: job.quality,
-      effort: 6,
-    });
-    const dest = path.join(outDir, `${job.name}-${width}.webp`);
+    const pipeline = base
+      .clone()
+      .resize({
+        width,
+        withoutEnlargement: !(job.extract || job.cropLeftRatio || job.allowUpscale),
+      })
+      .webp({
+        quality: job.quality,
+        effort: 6,
+      });
+    const dest = path.join(outDir, `${fileBase}-${width}.webp`);
     const info = await pipeline.toFile(dest);
     variants.push({
-      src: `/images/${job.name}-${width}.webp`,
+      src: `/images/${fileBase}-${width}.webp`,
       width: info.width,
       height: info.height,
     });
@@ -58,7 +91,7 @@ for (const job of jobs) {
   console.log(job.name, variants.map((v) => `${v.width}x${v.height}`).join(", "));
 }
 
-for (const cert of ["cert1", "cert2", "cert3"]) {
+for (const cert of ["cert1", "cert2", "cert3", "cert4", "cert5", "cert6", "cert7"]) {
   const info = await sharp(path.join(srcDir, `${cert}.jpg`))
     .rotate()
     .resize({ width: 1400, withoutEnlargement: true })
@@ -67,10 +100,10 @@ for (const cert of ["cert1", "cert2", "cert3"]) {
   console.log(`${cert}-full`, info.width, info.height, info.size);
 }
 
-const og = await sharp(path.join(srcDir, "hero.jpg"))
+const og = await sharp(path.join(srcDir, "aussie.jpg"))
   .rotate()
   .resize(1200, 630, { fit: "cover", position: "attention" })
-  .jpeg({ quality: 80, mozjpeg: true })
+  .jpeg({ quality: 82, mozjpeg: true })
   .toFile(path.join(root, "public", "og.jpg"));
 console.log("og", og.width, og.height, og.size);
 

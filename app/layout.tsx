@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { withBase } from "@/lib/paths";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 import "./fonts.css";
 import "./globals.css";
 
-const ogAlt = "Upravený pejsek po návštěvě Psího salonu Pucci";
+const ogAlt = "Černý pejsek s oranžovou mašlí z Psího salonu Pucci";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -79,16 +81,19 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#171717",
+  themeColor: "#9e1c3a",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="cs">
+    <html lang="cs" suppressHydrationWarning>
       <body>
         <Header />
         {children}
         <Footer />
+        {/* Dev: next/script runs. Export: strip keeps data-keep tag for static Pages. */}
+        <Script src={withBase("/site-behavior.js")} strategy="afterInteractive" />
+        <script data-keep defer src={withBase("/site-behavior.js")} />
       </body>
     </html>
   );

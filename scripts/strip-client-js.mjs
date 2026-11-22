@@ -1,7 +1,6 @@
 /**
- * The page has no client behaviour. Drop the Next.js hydration runtime
- * from the static export so the hero is not competing with unused JS.
- * JSON-LD stays.
+ * Drop the Next.js hydration runtime from the static export.
+ * JSON-LD and the small header script (data-keep) stay.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -23,7 +22,10 @@ for (const file of htmlFiles) {
   let html = fs.readFileSync(file, "utf8");
   html = html.replace(/<link rel="preconnect" href="\/"[^>]*>/g, "");
   html = html.replace(/<link rel="preload" as="script"[^>]*>/g, "");
-  html = html.replace(/<script(?![^>]*type="application\/ld\+json")[\s\S]*?<\/script>/g, "");
+  html = html.replace(
+    /<script(?![^>]*(?:type="application\/ld\+json"|data-keep))[\s\S]*?<\/script>/g,
+    "",
+  );
 
   html = html.replace(
     /<link rel="stylesheet" href="([^"]+)"[^>]*>/,

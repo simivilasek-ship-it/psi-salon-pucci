@@ -1,8 +1,20 @@
 import { CITY, EMAIL, ICO, PHONE_TEL, STREET } from "@/lib/content";
+import { buildFaqPageJsonLd } from "@/lib/faq";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 
+function jsonLdScript(data: unknown) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
+
 export function JsonLd() {
-  const data = {
+  const business = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${SITE_URL}/#salon`,
@@ -11,7 +23,7 @@ export function JsonLd() {
     url: `${SITE_URL}/`,
     telephone: PHONE_TEL,
     email: EMAIL,
-    image: [SITE_OG_IMAGE, `${SITE_URL}/images/hero-1120.webp`],
+    image: [SITE_OG_IMAGE, `${SITE_URL}/images/hero-aussie-1600.webp`],
     address: {
       "@type": "PostalAddress",
       streetAddress: STREET,
@@ -37,11 +49,9 @@ export function JsonLd() {
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
-      }}
-    />
+    <>
+      {jsonLdScript(business)}
+      {jsonLdScript(buildFaqPageJsonLd())}
+    </>
   );
 }

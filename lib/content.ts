@@ -8,13 +8,13 @@ export const STREET = "náměstí Míru 69/25";
 export const CITY = "Svitavy";
 export const OWNER = "Klára Zelinka, DiS";
 export const ICO = "21618241";
-export const PRICE_TBA = "[ceník doplní Klára]";
+export const PRICE_TBA = "cena dle plemene";
 
 export const nav = [
-  { href: "/#o-mne", label: "O mně" },
   { href: "/#sluzby", label: "Služby" },
-  { href: "/#cenik", label: "Ceník" },
   { href: "/#galerie", label: "Galerie" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/#o-mne", label: "O mně" },
   { href: "/#kontakt", label: "Kontakt" },
 ] as const;
 
@@ -38,6 +38,22 @@ export const certificates = [
   {
     name: "cert3" as const,
     alt: "Osvědčení z odborného semináře Dentální hygiena, Klára Zelinka",
+  },
+  {
+    name: "cert4" as const,
+    alt: "Osvědčení: odborný seminář úpravy anglického a amerického kokršpaněla, Klára Zelinka",
+  },
+  {
+    name: "cert5" as const,
+    alt: "Osvědčení: komerční a výstavní úprava West Highland White teriéra, Klára Zelinka",
+  },
+  {
+    name: "cert6" as const,
+    alt: "Osvědčení: seminář psychologie, poruch chování psů a komunikace se psy s Rudolfem Desenským, Klára Zelinka",
+  },
+  {
+    name: "cert7" as const,
+    alt: "Osvědčení o získání profesní kvalifikace Střihač / střihačka psů, Klára Zelinka, DiS",
   },
 ] as const;
 
@@ -92,22 +108,28 @@ export const priceNotes = [
 ] as const;
 
 export const notes = [
-  "Psy přijímáme pouze na kompletní úpravu včetně koupání. Bez koupání (psa si vykoupe majitel sám) přijímáme pouze výjimečně po domluvě v případě starého nebo agresivního psa a byla by pro něj návštěva salonu hodně náročná.",
-  "Úprava psa probíhá bez přítomnosti majitele pro lepší průběh celého procesu a kontaktu mezi psem a střihačkou.",
-  "Objednat se můžete telefonicky, přes Messenger, WhatsApp, Instagram nebo rezervační systém Reservio.",
+  {
+    title: "Kompletní úprava včetně koupání",
+    text: "Psy přijímáme pouze na kompletní úpravu včetně koupání. Bez koupání (psa si vykoupe majitel sám) přijímáme pouze výjimečně po domluvě v případě starého nebo agresivního psa a byla by pro něj návštěva salonu hodně náročná.",
+  },
+  {
+    title: "Úprava probíhá bez majitele",
+    text: "Úprava psa probíhá bez přítomnosti majitele pro lepší průběh celého procesu a kontaktu mezi psem a střihačkou.",
+  },
+  {
+    title: "Jak se objednat",
+    text: "Objednat se můžete telefonicky, přes Messenger, WhatsApp, Instagram nebo rezervační systém Reservio.",
+  },
 ] as const;
 
 export const gallery = [
-  { name: "g01" as const, alt: "Upravený pejsek v salonu" },
-  { name: "g03" as const, alt: "Bílý pejsek po úpravě" },
-  { name: "g06" as const, alt: "Upravený pejsek na stole salonu" },
-  { name: "g05" as const, alt: "Pejsek po stříhání" },
-  { name: "g04" as const, alt: "Pejsek po vyčesání" },
-  { name: "g09" as const, alt: "Velké plemeno v salonu" },
-  { name: "g10" as const, alt: "Kočička v salonu" },
-  { name: "g12" as const, alt: "Srdce ze srsti po vyčesání", center: true },
-  { name: "g02" as const, alt: "Pejsek v salonu" },
-  { name: "g07" as const, alt: "Jorkšírský teriér po stříhání na stole salonu" },
+  { name: "g01" as const, alt: "Upravený pejsek po kompletní úpravě v salonu" },
+  { name: "g04" as const, alt: "Pejsek po koupání a vyčesání srsti" },
+  { name: "g05" as const, alt: "Pejsek po stříhání v salonu" },
+  { name: "g06" as const, alt: "Pejsek po stříhání na stole salonu" },
+  { name: "g07" as const, alt: "Jorkšírský teriér po stříhání a úpravě na stole salonu", focus: "top" as const },
   { name: "g08" as const, alt: "Černobílý pejsek s modrou mašlí po úpravě" },
-  { name: "g11" as const, alt: "Tříbarevný dlouhosrstý pejsek po úpravě v salonu" },
+  { name: "g09" as const, alt: "Velké plemeno po koupání a vyčesání v salonu" },
+  { name: "g10" as const, alt: "Kočička po úpravě v salonu" },
+  { name: "g12" as const, alt: "Bernský salašnický pes a srdce ze srsti po vyčesání" },
 ] as const;
