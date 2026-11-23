@@ -13,7 +13,6 @@ import {
   PHONE_DISPLAY,
   PHONE_TEL,
   PRICE_TBA,
-  priceNotes,
   services,
   servicesIntro,
   STREET,
@@ -148,6 +147,28 @@ export function HomePage() {
               </li>
             ))}
           </ul>
+          {salon.priceList.length > 0 ? (
+            <div className="price-block">
+              <h3 className="price-heading">Ceník</h3>
+              <table className="price-table">
+                <caption className="sr-only">Ceník služeb</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Služba</th>
+                    <th scope="col">Cena</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {salon.priceList.map((row) => (
+                    <tr key={row.service}>
+                      <td>{row.service}</td>
+                      <td>{row.price}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
           <div className="services-cta">
             <a className="btn btn-solid" href={BOOKING_URL}>
               Rezervovat termín
@@ -179,11 +200,6 @@ export function HomePage() {
                 </tbody>
               </table>
             </div>
-            {priceNotes.map((note) => (
-              <p key={note} className="price-note">
-                {note}
-              </p>
-            ))}
           </div>
         </section>
       ) : null}
@@ -324,7 +340,7 @@ export function HomePage() {
                     aria-label={item.alt}
                     style={{ aspectRatio: `${variant.width} / ${variant.height}` }}
                   >
-                    <Photo name={item.name} alt="" sizes="(max-width: 640px) 70vw, 420px" />
+                    <Photo name={item.name} alt={item.alt} sizes="(max-width: 640px) 70vw, 420px" />
                   </button>
                 );
               })}
@@ -366,7 +382,6 @@ export function HomePage() {
         <button type="button" className="cert-lightbox-close" data-cert-lightbox-close aria-label="Zavřít">
           ×
         </button>
-        <img alt="" />
       </div>
 
       <SectionDivider from="brand" to="bg" flip />
@@ -495,16 +510,16 @@ function SectionHead({
 
 function ContactCard({
   href,
+  external = false,
   icon,
   label,
   value,
-  external = false,
 }: {
   href?: string;
+  external?: boolean;
   icon: ReactNode;
   label: string;
   value: string;
-  external?: boolean;
 }) {
   const body = (
     <>
@@ -529,7 +544,11 @@ function ContactCard({
   }
 
   return (
-    <a className="contact-card" href={href}>
+    <a
+      className="contact-card"
+      href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {body}
     </a>
   );

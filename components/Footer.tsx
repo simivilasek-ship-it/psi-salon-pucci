@@ -102,6 +102,8 @@ export function Footer() {
           <a href="https://simivilasek.cz" target="_blank" rel="noopener noreferrer">
             Simon Vilášek
           </a>
+          {" · "}
+          <a href={withBase("/ochrana-osobnich-udaju/")}>Ochrana osobních údajů</a>
         </p>
       </div>
       {whatsapp ? (

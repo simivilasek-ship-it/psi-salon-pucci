@@ -96,22 +96,6 @@ export const services = [
   },
 ] as const;
 
-export const prices = [
-  { service: "Koupání, fénování", price: PRICE_TBA },
-  { service: "Stříhání", price: PRICE_TBA },
-  { service: "Trimování", price: PRICE_TBA },
-  { service: "Vyčesání srsti", price: PRICE_TBA },
-  { service: "Dentální hygiena bez anestezie", price: PRICE_TBA },
-  { service: "Další služby (drápky, uši, anální žlázy)", price: PRICE_TBA },
-  { service: "Rozvoz po Svitavách", price: "100\u00A0Kč" },
-  { service: "Rozvoz do okolních obcí", price: "150\u00A0Kč" },
-] as const;
-
-export const priceNotes = [
-  "Rozvoz platí pro Svitavy a okolí (Hradec nad Svitavou, Vendolí, Radiměř, Opatovec, Koclířov, Javorník,…), pokud se nemáte jak do salonu dostat.",
-  "Platba je možná v\u00A0hotovosti nebo přes QR kód.",
-] as const;
-
 export const notes = [
   {
     title: "Kompletní úprava včetně koupání",

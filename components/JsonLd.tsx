@@ -1,4 +1,4 @@
-import { CITY, EMAIL, ICO, PHONE_TEL, STREET } from "@/lib/content";
+import { CITY, EMAIL, ICO, PHONE_TEL, POSTCODE, STREET } from "@/lib/content";
 import { buildFaqPageJsonLd } from "@/lib/faq";
 import { isFilled, salon, socialLinks } from "@/lib/salon";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
@@ -53,8 +53,8 @@ export function JsonLd() {
     address: {
       "@type": "PostalAddress",
       streetAddress: STREET,
+      postalCode: POSTCODE,
       addressLocality: CITY,
-      postalCode: salon.postcode,
       addressCountry: "CZ",
     },
     areaServed: {

@@ -26,13 +26,35 @@ Build pro GitHub Pages (cesty s `/psi-salon-pucci`) vzniká ve workflow, protož
 
 ## Adresa a doména
 
-Dokud je v `lib/salon.ts` pole `customDomain` prázdné, web běží na GitHub Pages s `basePath` `/psi-salon-pucci`. Vyplněné `customDomain` má přednost před `SITE_URL`. Volitelně lze kořen vynutit `CUSTOM_DOMAIN=true` (vzor v `.env.example`). Soubor `.env` se necommituje.
+Dokud je v `lib/salon.ts` pole `customDomain` prázdné, web běží na GitHub Pages s `basePath` `/psi-salon-pucci`. Build na Actions to pozná podle `GITHUB_ACTIONS`. Lokální `npm run build` prefix nemá.
 
-Po vyplnění domény a pushi na `main` build vypne `basePath`, kanonické URL i sitemap použijí `https://tato-domena` a do `out/` zapíše `CNAME`.
+Volitelně lze adresu přepsat proměnnou `SITE_URL` a kořen vynutit `CUSTOM_DOMAIN=true` (vzor v `.env.example`). Vyplněné `customDomain` má přednost před `SITE_URL`. Soubor `.env` se necommituje.
 
-## Co doplní Klára
+### Přepnutí na vlastní doménu
 
-Všechno od majitelky je v `lib/salon.ts`. Prázdné pole na webu nic nepřidá: ceník, odkaz na recenze, Instagram, WhatsApp, Messenger, otevírací dobu ani fotky před/po. U služeb zůstane „cena dle plemene“. Hvězdičky se nevykreslují. Rozvoz (100 Kč / 150 Kč) je v textu FAQ, to je ověřený údaj.
+1. V `lib/salon.ts` nastavte `customDomain` na hostname bez `https://` a bez cesty, například `psisalonpucci.cz`.
+2. Pushněte `main`. Build vypne `basePath`, kanonické URL a `sitemap.xml` budou `https://tato-domena/…` a do artefaktu zapíše soubor `CNAME`.
+3. U registrátora nastavte DNS na GitHub Pages: pro doménu bez www čtyři záznamy A na `185.199.108.153`, `185.199.109.153`, `185.199.110.153` a `185.199.111.153`. Pro `www` záznam CNAME na `simivilasek-ship-it.github.io`.
+4. V repozitáři **Settings → Pages** zkontrolujte, že se vlastní doména načetla z `CNAME`, a zapněte **Enforce HTTPS**.
+
+Když `customDomain` zase vymažete, další deploy `CNAME` nepřiloží a web se vrátí na adresu `github.io` s `/psi-salon-pucci`. Vlastní doménu je pak potřeba smazat i v nastavení Pages.
+
+## Co doplnit od Kláry
+
+Všechno, co má přijít od majitelky, je v `lib/salon.ts`. Prázdné pole na webu nic nepřidá.
+
+| Pole | Co se stane po vyplnění |
+| --- | --- |
+| `customDomain` | Web bez `/psi-salon-pucci`, správné kanonické URL, sitemap a soubor `CNAME`. |
+| `priceList` | Tabulka ceníku a nabídky ve strukturovaných datech. Dokud je prázdné, u služeb zůstane „cena dle plemene“. |
+| `googleReviewsUrl` | Odkaz „Recenze na Googlu“. Hvězdičky se nevykreslují. |
+| `instagramUrl` | Odkaz na Instagram v kontaktu a v patičce. |
+| `whatsappNumber` | Odkaz na WhatsApp (`wa.me`) v kontaktu a v patičce. |
+| `messengerUrl` | Odkaz na Messenger v kontaktu a v patičce. |
+| `openingHours` | Text místo „dle telefonické domluvy“ a hodiny ve strukturovaných datech. |
+| `beforeAfterPairs` | Sekce před/po. Fotky musí být v `public/`. |
+
+Rozvoz (100 Kč po Svitavách, 150 Kč do okolí) je v textu FAQ, to je ověřený údaj, ne ceník služeb. Instagram, WhatsApp a Messenger na webu ani na Reservio nebyly, proto jsou prázdné.
 
 Fotky se znovu vygenerují skriptem `node scripts/optimize-images.mjs` (potřebuje [sharp](https://sharp.pixelplumbing.com/)). Originály jsou ve `fotky/`.
 
