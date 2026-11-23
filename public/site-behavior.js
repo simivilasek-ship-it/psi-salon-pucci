@@ -31,6 +31,16 @@
     onScroll();
   }
 
+  var gallery = document.querySelector("[data-gallery]");
+  var galleryToggle = document.querySelector("[data-gallery-toggle]");
+  if (gallery && galleryToggle) {
+    galleryToggle.addEventListener("click", function () {
+      var open = gallery.classList.toggle("is-open");
+      galleryToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      galleryToggle.textContent = open ? "Méně" : "Více";
+    });
+  }
+
   var toggle = document.querySelector("[data-seminars-toggle]");
   var panel = document.querySelector("[data-seminars-panel]");
   var root = document.querySelector("[data-cert-fan]");

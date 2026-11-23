@@ -16,12 +16,12 @@ export const PRICE_TBA = "cena dle plemene";
 
 export const nav = [
   { href: "/#sluzby", label: "Služby" },
-  { href: "/#cenik", label: "Ceník" },
+  ...(salon.priceList.length > 0 ? [{ href: "/#cenik", label: "Ceník" }] : []),
   { href: "/#galerie", label: "Galerie" },
   { href: "/#faq", label: "FAQ" },
   { href: "/#o-mne", label: "O mně" },
   { href: "/#kontakt", label: "Kontakt" },
-] as const;
+];
 
 export const about = [
   "Jsem zakladatelkou Psího salonu Pucci, který nese jméno po mém čtyřnohém parťákovi.",
@@ -112,13 +112,17 @@ export const notes = [
 ] as const;
 
 export const gallery = [
-  { name: "g01" as const, alt: "Upravený pejsek po kompletní úpravě v salonu" },
-  { name: "g04" as const, alt: "Pejsek po koupání a vyčesání srsti" },
-  { name: "g05" as const, alt: "Pejsek po stříhání v salonu" },
-  { name: "g06" as const, alt: "Pejsek po stříhání na stole salonu" },
-  { name: "g07" as const, alt: "Jorkšírský teriér po stříhání a úpravě na stole salonu", focus: "top" as const },
-  { name: "g08" as const, alt: "Černobílý pejsek s modrou mašlí po úpravě" },
-  { name: "g09" as const, alt: "Velké plemeno po koupání a vyčesání v salonu" },
-  { name: "g10" as const, alt: "Kočička po úpravě v salonu" },
-  { name: "g12" as const, alt: "Bernský salašnický pes a srdce ze srsti po vyčesání" },
+  { name: "ba01" as const, alt: "Černobílý pejsek s mašlí před úpravou a po ní" },
+  { name: "ba02" as const, alt: "Bílý pejsek před úpravou a po ní" },
+  { name: "ba03" as const, alt: "Hnědý kudrnatý pejsek před úpravou a po ní" },
+  { name: "ba04" as const, alt: "Bílý kudrnatý pejsek před úpravou a po ní" },
+  { name: "ba05" as const, alt: "Jorkšírský teriér s mašlí před úpravou a po ní" },
+  { name: "ba06" as const, alt: "Jorkšírský teriér s culíkem před úpravou a po ní" },
+  { name: "ba07" as const, alt: "Malý černobílý pejsek před úpravou a po ní" },
+  { name: "ba08" as const, alt: "West highland white teriér před úpravou a po ní" },
+  { name: "ba09" as const, alt: "Jorkšírský teriér před střihem a po něm" },
+  { name: "ba10" as const, alt: "Kočka před vyčesáním a po něm" },
+  { name: "ba11" as const, alt: "Dlouhosrstý jorkšírský teriér před úpravou a po ní" },
+  { name: "ba12" as const, alt: "Afgánský chrt před úpravou a po ní" },
+  { name: "ba13" as const, alt: "Kokršpaněl před úpravou a po ní" },
 ] as const;

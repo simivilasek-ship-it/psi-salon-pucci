@@ -208,18 +208,29 @@ export function HomePage() {
 
       <section className="section section-alt" id="galerie" aria-labelledby="galerie-heading">
         <div className="wrap">
-          <SectionHead id="galerie-heading" kicker="Ukázky" title="Galerie" center />
-          <div className="gallery">
+          <SectionHead id="galerie-heading" kicker="Ukázky" title="Před a po" center />
+          <div className="gallery" id="galerie-grid" data-gallery>
             {gallery.map((item) => (
-              <figure key={item.name} data-focus={"focus" in item ? item.focus : undefined}>
+              <figure key={item.name}>
                 <Photo
                   name={item.name}
                   alt={item.alt}
-                  sizes="(max-width: 560px) calc(100vw - 40px), (max-width: 800px) calc(50vw - 28px), 360px"
+                  sizes="(max-width: 719px) calc(100vw - 32px), 540px"
                 />
               </figure>
             ))}
           </div>
+          <p className="gallery-expand">
+            <button
+              type="button"
+              className="btn btn-outline"
+              data-gallery-toggle
+              aria-expanded="false"
+              aria-controls="galerie-grid"
+            >
+              Více
+            </button>
+          </p>
         </div>
       </section>
 
