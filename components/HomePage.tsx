@@ -252,7 +252,7 @@ export function HomePage() {
                     aria-label={item.alt}
                     style={{ aspectRatio: `${variant.width} / ${variant.height}` }}
                   >
-                    <Photo name={item.name} alt="" sizes="(max-width: 640px) 70vw, 420px" />
+                    <Photo name={item.name} alt={item.alt} sizes="(max-width: 640px) 70vw, 420px" />
                   </button>
                 );
               })}
@@ -294,7 +294,6 @@ export function HomePage() {
         <button type="button" className="cert-lightbox-close" data-cert-lightbox-close aria-label="Zavřít">
           ×
         </button>
-        <img alt="" />
       </div>
 
       <SectionDivider from="brand" to="bg" flip />

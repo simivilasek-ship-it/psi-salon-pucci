@@ -42,7 +42,6 @@
   var next = root.querySelector("[data-cert-next]");
   var counter = root.querySelector("[data-cert-counter]");
   var lightbox = document.querySelector("[data-cert-lightbox]");
-  var lightboxImg = lightbox && lightbox.querySelector("img");
   var lightboxClose = lightbox && lightbox.querySelector("[data-cert-lightbox-close]");
   var total = cards.length;
   if (!stage || !total) return;
@@ -104,10 +103,14 @@
   function openLightbox() {
     var card = cards[index];
     var full = card && card.getAttribute("data-full");
-    var alt = card && card.getAttribute("data-alt");
-    if (!lightbox || !lightboxImg || !full) return;
+    var alt = (card && card.getAttribute("data-alt")) || "";
+    if (!lightbox || !full) return;
+    var existing = lightbox.querySelector("img");
+    if (existing) existing.remove();
+    var lightboxImg = document.createElement("img");
     lightboxImg.src = full;
-    lightboxImg.alt = alt || "";
+    lightboxImg.alt = alt;
+    lightbox.appendChild(lightboxImg);
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
   }
@@ -116,6 +119,8 @@
     if (!lightbox) return;
     lightbox.hidden = true;
     document.body.style.overflow = "";
+    var lightboxImg = lightbox.querySelector("img");
+    if (lightboxImg) lightboxImg.remove();
   }
 
   if (prev) prev.addEventListener("click", function () { step(-1); });

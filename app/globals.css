@@ -1538,8 +1538,26 @@ body:has(.menu-check:checked) .fab {
   display: none;
 }
 
-.not-found {
+.not-found,
+.privacy {
   padding: calc(var(--nav-h) + 72px) 0 96px;
+}
+
+.privacy h1 {
+  margin-bottom: 16px;
+}
+
+.privacy h2 {
+  margin: 28px 0 8px;
+  font-size: 1.35rem;
+}
+
+.privacy p + p {
+  margin-top: 12px;
+}
+
+.privacy-back {
+  margin-top: 32px;
 }
 
 .not-found h1 {
