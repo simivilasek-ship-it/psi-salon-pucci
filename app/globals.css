@@ -1609,6 +1609,11 @@ footer {
   text-decoration: none;
 }
 
+.fab-whatsapp {
+  right: auto;
+  left: max(16px, env(safe-area-inset-left, 0px));
+}
+
 body:has(.menu-check:checked) .fab {
   display: none;
 }
