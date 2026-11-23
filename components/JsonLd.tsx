@@ -1,5 +1,6 @@
 import { CITY, EMAIL, ICO, PHONE_TEL, STREET } from "@/lib/content";
 import { buildFaqPageJsonLd } from "@/lib/faq";
+import { isFilled, salon, socialLinks } from "@/lib/salon";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 
 function jsonLdScript(data: unknown) {
@@ -13,8 +14,33 @@ function jsonLdScript(data: unknown) {
   );
 }
 
+function offerFromPrice(item: { service: string; price: string }) {
+  const offer: Record<string, unknown> = {
+    "@type": "Offer",
+    name: item.service,
+    description: item.price,
+    itemOffered: {
+      "@type": "Service",
+      name: item.service,
+    },
+  };
+
+  const amount = item.price.trim().match(/^(\d+(?:[.,]\d+)?)\s*(?:Kč)?$/);
+  if (amount) {
+    offer.price = amount[1].replace(",", ".");
+    offer.priceCurrency = "CZK";
+  }
+
+  return offer;
+}
+
 export function JsonLd() {
-  const business = {
+  const sameAs = [
+    ...socialLinks().map((item) => item.href),
+    isFilled(salon.googleReviewsUrl) ? salon.googleReviewsUrl.trim() : "",
+  ].filter(Boolean);
+
+  const business: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${SITE_URL}/#salon`,
@@ -28,6 +54,7 @@ export function JsonLd() {
       "@type": "PostalAddress",
       streetAddress: STREET,
       addressLocality: CITY,
+      postalCode: salon.postcode,
       addressCountry: "CZ",
     },
     areaServed: {
@@ -47,6 +74,22 @@ export function JsonLd() {
     currenciesAccepted: "CZK",
     paymentAccepted: "Hotovost, QR kód",
   };
+
+  if (salon.priceList.length > 0) {
+    business.hasOfferCatalog = {
+      "@type": "OfferCatalog",
+      name: "Ceník",
+      itemListElement: salon.priceList.map(offerFromPrice),
+    };
+  }
+
+  if (sameAs.length > 0) {
+    business.sameAs = sameAs;
+  }
+
+  if (isFilled(salon.openingHours)) {
+    business.openingHours = salon.openingHours.trim();
+  }
 
   return (
     <>

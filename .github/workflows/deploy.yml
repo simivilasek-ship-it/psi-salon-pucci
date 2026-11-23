@@ -31,10 +31,8 @@ jobs:
         run: npm ci
 
       - name: Build static export
-        env:
-          # false = GitHub Pages na /psi-salon-pucci. true = vlastní doména v kořeni.
-          CUSTOM_DOMAIN: "false"
-          SITE_URL: https://simivilasek-ship-it.github.io/psi-salon-pucci
+        # Doména a basePath se berou z lib/salon.ts (customDomain).
+        # GITHUB_ACTIONS je na runneru samo. Prázdná doména = /psi-salon-pucci.
         run: npm run build
 
       - name: Disable Jekyll

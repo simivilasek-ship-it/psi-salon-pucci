@@ -3,9 +3,9 @@
 - Dev: `npm run dev`
 - Build: `npm run build` (static export do `out/`). Skript po buildu smaže hydrataci Nextu a nechá JSON-LD plus malý skript menu (`data-keep`).
 - Stack: Next.js App Router, TypeScript, statický export
-- Kanonická adresa: `SITE_URL` v `lib/site.ts` (výchozí `https://simivilasek-ship-it.github.io/psi-salon-pucci`)
-- GitHub Pages: `basePath` `/psi-salon-pucci`, dokud `CUSTOM_DOMAIN` není `true`
-- Texty a kontakty: `lib/content.ts`. Ceny služeb nechávat jako `[ceník doplní Klára]`, dokud je Klára nedodá. Nevymýšlet hodiny, sociální sítě ani ceny.
+- Kanonická adresa: `customDomain` v `lib/salon.ts`, jinak `SITE_URL` nebo `https://simivilasek-ship-it.github.io/psi-salon-pucci`
+- GitHub Pages: `basePath` `/psi-salon-pucci`, dokud `customDomain` není vyplněné a `CUSTOM_DOMAIN` není `true`
+- Údaje od Kláry jen v `lib/salon.ts`. Prázdné pole se na webu neukáže. Nevymýšlet ceny, recenze, hodnocení, hodiny, odkazy ani fotky.
 - Fotky: originály ve `fotky/`, ostré WebP v `public/images/` (`node scripts/optimize-images.mjs`, potřebuje balíček `sharp`)
 
 <!-- BEGIN:nextjs-agent-rules -->

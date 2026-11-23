@@ -1,7 +1,17 @@
-/** Canonical URL without a trailing slash. Override with SITE_URL at build time. */
-export const SITE_URL = (
-  process.env.SITE_URL ?? "https://simivilasek-ship-it.github.io/psi-salon-pucci"
-).replace(/\/+$/, "");
+import { customDomainHost } from "@/lib/salon";
+
+const pagesUrl = "https://simivilasek-ship-it.github.io/psi-salon-pucci";
+
+function canonicalUrl(): string {
+  const domain = customDomainHost();
+  if (domain) return `https://${domain}`;
+  const fromEnv = process.env.SITE_URL?.trim();
+  if (fromEnv) return fromEnv.replace(/\/+$/, "");
+  return pagesUrl;
+}
+
+/** Canonical URL without a trailing slash. Vyplněné customDomain má přednost před SITE_URL. */
+export const SITE_URL = canonicalUrl();
 
 export const SITE_NAME = "Psí salon Pucci";
 

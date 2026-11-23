@@ -1,9 +1,32 @@
-import { CITY, EMAIL, ICO, OWNER, PHONE_DISPLAY, PHONE_TEL, STREET } from "@/lib/content";
+import { ADDRESS_LINE, EMAIL, ICO, nav, OWNER, PHONE_DISPLAY, PHONE_TEL } from "@/lib/content";
 import { withBase } from "@/lib/paths";
+import { isFilled, salon, socialLinks as salonSocialLinks } from "@/lib/salon";
 import { SITE_NAME } from "@/lib/site";
+
+function footerNote() {
+  const channels = ["telefonicky", "přes Reservio"];
+  const social = salonSocialLinks();
+  for (const link of social) {
+    channels.push(link.label);
+  }
+
+  const booking =
+    channels.length === 2
+      ? `${channels[0]} nebo ${channels[1]}`
+      : `${channels.slice(0, -1).join(", ")} nebo ${channels[channels.length - 1]}`;
+
+  return `Objednání ${booking}. Platba v hotovosti nebo přes QR kód.`;
+}
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const whatsapp = salonSocialLinks().find((link) => link.label === "WhatsApp");
+  const links = [
+    ...salonSocialLinks().map((link) => ({ href: link.href, label: link.label })),
+    isFilled(salon.googleReviewsUrl)
+      ? { href: salon.googleReviewsUrl.trim(), label: "Google recenze" }
+      : null,
+  ].filter((link): link is { href: string; label: string } => Boolean(link?.href));
 
   return (
     <footer>
@@ -22,9 +45,7 @@ export function Footer() {
           <dl className="footer-dl">
             <div>
               <dt>Sídlo</dt>
-              <dd>
-                {STREET}, {CITY}
-              </dd>
+              <dd>{ADDRESS_LINE}</dd>
             </div>
             <div>
               <dt>IČO</dt>
@@ -42,9 +63,38 @@ export function Footer() {
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
               </dd>
             </div>
+            {links.length > 0 ? (
+              <div>
+                <dt>Sítě</dt>
+                <dd>
+                  {links.map((link, index) => (
+                    <span key={link.label}>
+                      {index > 0 ? " · " : null}
+                      <a href={link.href} target="_blank" rel="noopener noreferrer">
+                        {link.label}
+                      </a>
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            ) : null}
           </dl>
         </div>
-        <p className="footer-note">Objednání telefonicky nebo přes Reservio. Platba v hotovosti nebo přes QR kód.</p>
+        <div className="footer-side">
+          <nav className="footer-nav" aria-label="Patička">
+            <ul>
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <a href={withBase(item.href)}>{item.label}</a>
+                </li>
+              ))}
+              <li>
+                <a href={withBase("/ochrana-osobnich-udaju/")}>Ochrana osobních údajů</a>
+              </li>
+            </ul>
+          </nav>
+          <p className="footer-note">{footerNote()}</p>
+        </div>
       </div>
       <div className="wrap footer-bottom">
         <p>

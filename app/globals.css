@@ -1006,6 +1006,53 @@ th:last-child {
   margin-top: 8px;
 }
 
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 720px) {
+  .before-after {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.before-after-pair {
+  margin: 0;
+}
+
+.before-after-shots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.before-after-shots img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.before-after-label {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+  font-weight: 650;
+  color: var(--soft);
+  text-align: center;
+}
+
+.reviews-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
 .info-list {
   display: grid;
   grid-template-columns: 1fr;
@@ -1484,11 +1531,39 @@ footer {
   color: var(--trust);
 }
 
+.footer-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.footer-nav ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-nav a {
+  color: #fff;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.footer-nav a:hover {
+  color: var(--trust);
+}
+
 .footer-note {
   max-width: 280px;
-  margin: 8px 0 0;
+  margin: 0;
   font-size: 15px;
   line-height: 1.55;
+  text-align: right;
 }
 
 .footer-bottom {
@@ -1538,8 +1613,26 @@ body:has(.menu-check:checked) .fab {
   display: none;
 }
 
-.not-found {
+.not-found,
+.privacy {
   padding: calc(var(--nav-h) + 72px) 0 96px;
+}
+
+.privacy h1 {
+  margin-bottom: 16px;
+}
+
+.privacy h2 {
+  margin: 28px 0 8px;
+  font-size: 1.35rem;
+}
+
+.privacy p + p {
+  margin-top: 12px;
+}
+
+.privacy-back {
+  margin-top: 32px;
 }
 
 .not-found h1 {
@@ -1999,8 +2092,14 @@ body:has(.menu-check:checked) .fab {
     gap: 22px;
   }
 
+  .footer-side,
+  .footer-nav ul {
+    align-items: flex-start;
+  }
+
   .footer-note {
     max-width: none;
+    text-align: left;
   }
 
   .gallery {

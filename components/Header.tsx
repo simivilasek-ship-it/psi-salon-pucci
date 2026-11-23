@@ -1,7 +1,23 @@
 import { nav, PHONE_DISPLAY, PHONE_TEL } from "@/lib/content";
 import { withBase } from "@/lib/paths";
+import { isFilled, salon } from "@/lib/salon";
+
+function buildNav(): { href: string; label: string }[] {
+  const items: { href: string; label: string }[] = nav.map((item) => ({
+    href: item.href,
+    label: item.label,
+  }));
+  if (!isFilled(salon.googleReviewsUrl)) return items;
+
+  const kontaktIdx = items.findIndex((item) => item.href === "/#kontakt");
+  const insertAt = kontaktIdx >= 0 ? kontaktIdx : items.length;
+  items.splice(insertAt, 0, { href: "/#recenze", label: "Recenze" });
+  return items;
+}
 
 export function Header() {
+  const navItems = buildNav();
+
   return (
     <header className="bar" data-header>
       <a className="skip" href="#obsah">
@@ -27,7 +43,7 @@ export function Header() {
         </a>
         <nav aria-label="Hlavní navigace">
           <ul className="nav-links">
-            {nav.map((item) => (
+            {navItems.map((item) => (
               <li key={item.href}>
                 <a href={withBase(item.href)}>{item.label}</a>
               </li>

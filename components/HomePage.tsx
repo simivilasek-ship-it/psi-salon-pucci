@@ -13,6 +13,7 @@ import {
   PHONE_DISPLAY,
   PHONE_TEL,
   PRICE_TBA,
+  priceNotes,
   services,
   servicesIntro,
   STREET,
@@ -20,8 +21,9 @@ import {
 import { faq } from "@/lib/faq";
 import imageManifest from "@/lib/image-manifest.json";
 import { withBase } from "@/lib/paths";
+import { isFilled, openingHoursText, salon, socialLinks } from "@/lib/salon";
 
-const mapQuery = encodeURIComponent(`${STREET}, ${CITY}`);
+const mapQuery = encodeURIComponent(`${STREET}, ${salon.postcode} ${CITY}`);
 const MAP_URL = `https://mapy.cz/zakladni?q=${mapQuery}`;
 const MAP_EMBED = `https://maps.google.com/maps?q=${mapQuery}&z=16&hl=cs&output=embed`;
 
@@ -30,7 +32,39 @@ const heroFacts = [
   { value: "Objednání", label: "Reservio nebo telefon" },
 ] as const;
 
+const hasGoogleReviews = isFilled(salon.googleReviewsUrl);
+const hasBeforeAfter = salon.beforeAfterPairs.length > 0;
+
+const socialValue: Record<string, string> = {
+  Instagram: "Psí salon Pucci",
+  WhatsApp: PHONE_DISPLAY,
+  Messenger: "Napsat zprávu",
+};
+
+function socialIcon(label: string) {
+  if (label === "Instagram") return <IconInstagram />;
+  if (label === "WhatsApp") return <IconWhatsApp />;
+  if (label === "Messenger") return <IconMessenger />;
+  return <IconMail />;
+}
+
+function bookingNoteText(channels: string[]) {
+  if (channels.length === 0) {
+    return "Objednat se můžete telefonicky nebo přes rezervační systém Reservio.";
+  }
+  const extras = channels.join(", ");
+  return `Objednat se můžete telefonicky, přes ${extras} nebo rezervační systém Reservio.`;
+}
+
 export function HomePage() {
+  const hoursValue = openingHoursText();
+  const contactSocials = socialLinks();
+  const infoNotes = notes.map((note) =>
+    note.title === "Jak se objednat"
+      ? { ...note, text: bookingNoteText(contactSocials.map((link) => link.label)) }
+      : note,
+  );
+
   return (
     <main id="obsah" tabIndex={-1}>
       <section className="hero" id="uvod" aria-labelledby="hero-heading">
@@ -91,7 +125,9 @@ export function HomePage() {
                   <div className="service-card-top">
                     <div className="service-card-title">
                       <h3>{item.title}</h3>
-                      <p className="service-price tba">{PRICE_TBA}</p>
+                      <p className={listedPrice(item.title) ? "service-price" : "service-price tba"}>
+                        {listedPrice(item.title) ?? PRICE_TBA}
+                      </p>
                     </div>
                     <p className="service-card-desc">{item.text}</p>
                   </div>
@@ -120,6 +156,38 @@ export function HomePage() {
         </div>
       </section>
 
+      {salon.priceList.length > 0 ? (
+        <section className="section" id="cenik" aria-labelledby="cenik-heading">
+          <div className="wrap">
+            <SectionHead id="cenik-heading" kicker="Služby" title="Ceník" center />
+            <div className="price-card table-wrap">
+              <table>
+                <caption className="sr-only">Ceník služeb</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Služba</th>
+                    <th scope="col">Cena</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {salon.priceList.map((row) => (
+                    <tr key={row.service}>
+                      <td>{row.service}</td>
+                      <td>{row.price}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {priceNotes.map((note) => (
+              <p key={note} className="price-note">
+                {note}
+              </p>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       <SectionDivider from="bg" to="alt" />
 
       <section className="section section-alt" id="galerie" aria-labelledby="galerie-heading">
@@ -139,13 +207,47 @@ export function HomePage() {
         </div>
       </section>
 
+      {hasBeforeAfter ? (
+        <section className="section section-alt" id="pred-po" aria-labelledby="pred-po-heading">
+          <div className="wrap">
+            <SectionHead id="pred-po-heading" kicker="Výsledek" title="Před a po" center />
+            <ul className="before-after">
+              {salon.beforeAfterPairs.map((pair) => (
+                <li key={`${pair.before}-${pair.after}`}>
+                  <figure className="before-after-pair">
+                    <div className="before-after-shots">
+                      <div>
+                        <img
+                          src={withBase(pair.before.startsWith("/") ? pair.before : `/${pair.before}`)}
+                          alt={pair.altBefore}
+                          loading="lazy"
+                        />
+                        <p className="before-after-label">Před</p>
+                      </div>
+                      <div>
+                        <img
+                          src={withBase(pair.after.startsWith("/") ? pair.after : `/${pair.after}`)}
+                          alt={pair.altAfter}
+                          loading="lazy"
+                        />
+                        <p className="before-after-label">Po</p>
+                      </div>
+                    </div>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
+
       <SectionDivider from="alt" to="bg" flip />
 
       <section className="section" id="info" aria-labelledby="info-heading">
         <div className="wrap">
           <SectionHead id="info-heading" kicker="Než přijdete" title="Důležité informace" center />
           <ul className="info-list">
-            {notes.map((note, index) => (
+            {infoNotes.map((note, index) => (
               <li key={note.title} className="info-card">
                 <span className="info-icon" aria-hidden="true">
                   {index === 0 ? <IconDroplet /> : null}
@@ -157,36 +259,6 @@ export function HomePage() {
               </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      <section className="section" id="faq" aria-labelledby="faq-heading">
-        <div className="wrap faq-wrap">
-          <SectionHead id="faq-heading" kicker="FAQ" title="Časté otázky" center />
-          <div className="faq-list">
-            {faq.map((item, index) => (
-              <details key={item.question} className="faq-item" open={index === 0 || undefined}>
-                <summary>
-                  <span className="faq-question">{item.question}</span>
-                  <span className="faq-icon" aria-hidden="true" />
-                </summary>
-                <div className="faq-answer">
-                  <p>{item.answer}</p>
-                </div>
-              </details>
-            ))}
-          </div>
-          <div className="faq-cta">
-            <p className="faq-cta-title">Nenašli jste odpověď?</p>
-            <div className="actions">
-              <a className="btn btn-solid" href={`tel:${PHONE_TEL}`}>
-                Zavolat
-              </a>
-              <a className="btn btn-outline" href={`mailto:${EMAIL}`}>
-                Napsat e-mail
-              </a>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -299,6 +371,56 @@ export function HomePage() {
 
       <SectionDivider from="brand" to="bg" flip />
 
+      {hasGoogleReviews ? (
+        <section className="section" id="recenze" aria-labelledby="recenze-heading">
+          <div className="wrap">
+            <SectionHead id="recenze-heading" kicker="Hodnocení" title="Recenze" center>
+              <p>Přečtěte si zkušenosti majitelů na&nbsp;Googlu.</p>
+            </SectionHead>
+            <div className="reviews-cta">
+              <a
+                className="btn btn-solid"
+                href={salon.googleReviewsUrl.trim()}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Zobrazit recenze na Googlu
+              </a>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="section" id="faq" aria-labelledby="faq-heading">
+        <div className="wrap faq-wrap">
+          <SectionHead id="faq-heading" kicker="FAQ" title="Časté otázky" center />
+          <div className="faq-list">
+            {faq.map((item, index) => (
+              <details key={item.question} className="faq-item" open={index === 0 || undefined}>
+                <summary>
+                  <span className="faq-question">{item.question}</span>
+                  <span className="faq-icon" aria-hidden="true" />
+                </summary>
+                <div className="faq-answer">
+                  <p>{item.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+          <div className="faq-cta">
+            <p className="faq-cta-title">Nenašli jste odpověď?</p>
+            <div className="actions">
+              <a className="btn btn-solid" href={`tel:${PHONE_TEL}`}>
+                Zavolat
+              </a>
+              <a className="btn btn-outline" href={`mailto:${EMAIL}`}>
+                Napsat e-mail
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="section" id="kontakt" aria-labelledby="kontakt-heading">
         <div className="wrap contact">
           <div>
@@ -306,9 +428,19 @@ export function HomePage() {
             <div className="contact-list">
               <ContactCard href={`tel:${PHONE_TEL}`} icon={<IconPhone />} label="Telefon" value={PHONE_DISPLAY} />
               <ContactCard href={`mailto:${EMAIL}`} icon={<IconMail />} label="E-mail" value={EMAIL} />
-              <ContactCard icon={<IconPin />} label="Adresa" value={`${STREET}, ${CITY}`} />
-              <ContactCard icon={<IconClock />} label="Otevírací doba" value="dle telefonické domluvy" />
-              <ContactCard href={BOOKING_URL} icon={<IconCalendar />} label="Online rezervace" value="Reservio" />
+              <ContactCard icon={<IconPin />} label="Adresa" value={`${STREET}, ${salon.postcode} ${CITY}`} />
+              <ContactCard icon={<IconClock />} label="Otevírací doba" value={hoursValue} />
+              <ContactCard href={BOOKING_URL} icon={<IconCalendar />} label="Online rezervace" value="Reservio" external />
+              {contactSocials.map((link) => (
+                <ContactCard
+                  key={link.label}
+                  href={link.href}
+                  icon={socialIcon(link.label)}
+                  label={link.label}
+                  value={socialValue[link.label] ?? link.label}
+                  external
+                />
+              ))}
             </div>
             <p className="owner">{OWNER}</p>
           </div>
@@ -331,6 +463,11 @@ export function HomePage() {
       <SectionDivider from="bg" to="dark" />
     </main>
   );
+}
+
+function listedPrice(service: string): string | undefined {
+  const row = salon.priceList.find((item) => item.service === service);
+  return row && isFilled(row.price) ? row.price : undefined;
 }
 
 function SectionHead({
@@ -361,11 +498,13 @@ function ContactCard({
   icon,
   label,
   value,
+  external = false,
 }: {
   href?: string;
   icon: ReactNode;
   label: string;
   value: string;
+  external?: boolean;
 }) {
   const body = (
     <>
@@ -379,6 +518,14 @@ function ContactCard({
 
   if (!href) {
     return <div className="contact-card">{body}</div>;
+  }
+
+  if (external) {
+    return (
+      <a className="contact-card" href={href} target="_blank" rel="noopener noreferrer">
+        {body}
+      </a>
+    );
   }
 
   return (
@@ -462,6 +609,39 @@ function IconCalendar() {
       <path
         fill="currentColor"
         d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3V2Zm13 8H4v10h16V10Z"
+      />
+    </svg>
+  );
+}
+
+function IconInstagram() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm11 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
+      />
+    </svg>
+  );
+}
+
+function IconWhatsApp() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.25-1.38A9.9 9.9 0 1 0 12.04 2Zm0 1.8a8.1 8.1 0 0 1 6.8 12.5l-.3.45.9 2.4-2.5-.85-.42.25a8.1 8.1 0 1 1-4.48-14.75Zm-3.4 3.3c-.24 0-.55.1-.72.42-.25.38-.95 1.16-.95 2.82s.97 3.26 1.1 3.48c.14.22 1.88 3 4.64 4.1 2.23.9 2.68.72 3.16.68.48-.04 1.55-.63 1.77-1.24.22-.61.22-1.13.15-1.24-.07-.11-.26-.18-.55-.32-.28-.14-1.7-.84-1.96-.93-.26-.1-.45-.14-.64.14-.19.28-.74.93-.9 1.12-.17.2-.33.22-.61.08-.28-.14-1.19-.44-2.27-1.4-.84-.75-1.4-1.67-1.57-1.95-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.5.14-.16.19-.28.28-.47.1-.19.05-.35-.02-.5-.08-.14-.64-1.54-.88-2.11-.23-.54-.46-.47-.64-.48Z"
+      />
+    </svg>
+  );
+}
+
+function IconMessenger() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 2C6.48 2 2 6.14 2 11.25c0 2.9 1.44 5.48 3.7 7.18V22l3.4-1.87c.92.25 1.9.39 2.9.39 5.52 0 10-4.14 10-9.27S17.52 2 12 2Zm1.05 12.48-2.54-2.7-4.96 2.7 5.46-5.8 2.6 2.7 4.9-2.7-5.46 5.8Z"
       />
     </svg>
   );

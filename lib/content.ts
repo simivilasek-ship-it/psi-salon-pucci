@@ -1,17 +1,22 @@
-/** Verified copy from the approved draft. Prices stay as Klára's placeholder. */
+/** Ověřené texty webu. Kontakt a volitelná pole od Kláry jsou v lib/salon.ts. */
 
-export const PHONE_TEL = "+420722447002";
-export const PHONE_DISPLAY = "722\u00A0447\u00A0002";
-export const EMAIL = "psisalon.pucci@gmail.com";
-export const BOOKING_URL = "https://psi-salon-pucci.reservio.com";
-export const STREET = "náměstí Míru 69/25";
-export const CITY = "Svitavy";
-export const OWNER = "Klára Zelinka, DiS";
-export const ICO = "21618241";
+import { salon } from "@/lib/salon";
+
+export const PHONE_TEL = salon.phoneTel;
+export const PHONE_DISPLAY = salon.phoneDisplay;
+export const EMAIL = salon.email;
+export const BOOKING_URL = salon.bookingUrl;
+export const STREET = salon.street;
+export const POSTCODE = salon.postcode;
+export const CITY = salon.city;
+export const ADDRESS_LINE = `${salon.street}, ${salon.postcode} ${salon.city}`;
+export const OWNER = salon.owner;
+export const ICO = salon.ico;
 export const PRICE_TBA = "cena dle plemene";
 
 export const nav = [
   { href: "/#sluzby", label: "Služby" },
+  { href: "/#cenik", label: "Ceník" },
   { href: "/#galerie", label: "Galerie" },
   { href: "/#faq", label: "FAQ" },
   { href: "/#o-mne", label: "O mně" },
@@ -118,7 +123,7 @@ export const notes = [
   },
   {
     title: "Jak se objednat",
-    text: "Objednat se můžete telefonicky, přes Messenger, WhatsApp, Instagram nebo rezervační systém Reservio.",
+    text: "Objednat se můžete telefonicky nebo přes rezervační systém Reservio.",
   },
 ] as const;
 

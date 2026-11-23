@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
+import { readCustomDomain } from "./scripts/read-custom-domain.mjs";
 
 // GitHub Pages (project site): /psi-salon-pucci.
-// Vlastní doména v kořeni: CUSTOM_DOMAIN=true a SITE_URL=https://example.cz
+// Vlastní doména: vyplňte customDomain v lib/salon.ts (CNAME + kanonická URL + bez basePath).
 const repo = "psi-salon-pucci";
 const onPages = process.env.GITHUB_ACTIONS === "true";
-const customDomain = process.env.CUSTOM_DOMAIN === "true";
+const customDomain = readCustomDomain().length > 0;
 const basePath = onPages && !customDomain ? `/${repo}` : "";
 
 const nextConfig: NextConfig = {
