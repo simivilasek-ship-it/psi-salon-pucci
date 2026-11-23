@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BOOKING_URL, CITY, EMAIL, ICO, OWNER, PHONE_DISPLAY, PHONE_TEL, STREET } from "@/lib/content";
+import { ADDRESS_LINE, BOOKING_URL, CITY, EMAIL, ICO, OWNER, PHONE_DISPLAY, PHONE_TEL } from "@/lib/content";
 import { withBase } from "@/lib/paths";
 import { SITE_NAME } from "@/lib/site";
 
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <h1>Ochrana osobních údajů</h1>
         <h2>Správce</h2>
         <p>
-          Správcem osobních údajů je {OWNER}, IČO {ICO}, {STREET}, {CITY}. Kontakt:{" "}
+          Správcem osobních údajů je {OWNER}, IČO {ICO}, {ADDRESS_LINE}. Kontakt:{" "}
           <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>,{" "}
           <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
         </p>

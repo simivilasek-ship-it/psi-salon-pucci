@@ -856,6 +856,72 @@ section[id] {
   color: var(--soft);
 }
 
+.price-block,
+.ba {
+  max-width: 720px;
+  margin: 40px auto 0;
+}
+
+.price-heading {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.price-table th,
+.price-table td {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.price-table th {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.price-table td:last-child,
+.price-table th:last-child {
+  text-align: right;
+}
+
+.reviews-link {
+  margin: 18px 0 0;
+}
+
+.ba-list {
+  display: grid;
+  gap: 28px;
+}
+
+.ba-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 0;
+}
+
+.ba-pair img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.ba-pair figcaption {
+  margin-top: 6px;
+  color: var(--mid);
+  font-size: 0.85rem;
+}
+
 .service-card p {
   color: var(--mid);
 }

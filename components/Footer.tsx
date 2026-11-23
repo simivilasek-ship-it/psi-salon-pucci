@@ -1,5 +1,6 @@
-import { CITY, EMAIL, ICO, OWNER, PHONE_DISPLAY, PHONE_TEL, STREET } from "@/lib/content";
+import { ADDRESS_LINE, EMAIL, ICO, OWNER, PHONE_DISPLAY, PHONE_TEL } from "@/lib/content";
 import { withBase } from "@/lib/paths";
+import { socialLinks } from "@/lib/salon";
 import { SITE_NAME } from "@/lib/site";
 
 export function Footer() {
@@ -22,9 +23,7 @@ export function Footer() {
           <dl className="footer-dl">
             <div>
               <dt>Sídlo</dt>
-              <dd>
-                {STREET}, {CITY}
-              </dd>
+              <dd>{ADDRESS_LINE}</dd>
             </div>
             <div>
               <dt>IČO</dt>
@@ -42,6 +41,16 @@ export function Footer() {
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
               </dd>
             </div>
+            {socialLinks().map((link) => (
+              <div key={link.href}>
+                <dt>{link.label}</dt>
+                <dd>
+                  <a href={link.href} target="_blank" rel="noopener noreferrer">
+                    {link.label}
+                  </a>
+                </dd>
+              </div>
+            ))}
           </dl>
         </div>
         <p className="footer-note">Objednání telefonicky nebo přes Reservio. Platba v hotovosti nebo přes QR kód.</p>

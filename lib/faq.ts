@@ -7,7 +7,7 @@ export const faq: readonly FaqItem[] = [
   {
     question: "Stříháte psy ve Svitavách?",
     answer:
-      "Ano, Psí salon Pucci sídlí na náměstí Míru 69/25 ve Svitavách. Přijímáme psy všech plemen a velikostí, do salonu chodí i kočky.",
+      "Ano, Psí salon Pucci sídlí na náměstí Míru 69/25, 568 02 Svitavy. Přijímáme psy všech plemen a velikostí, do salonu chodí i kočky.",
   },
   {
     question: "Co všechno je v celkové úpravě?",

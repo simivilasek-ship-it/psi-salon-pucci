@@ -1,13 +1,17 @@
-/** Verified copy from the approved draft. Prices stay as Klára's placeholder. */
+/** Ověřené texty webu. Kontakt a volitelná pole od Kláry jsou v lib/salon.ts. */
 
-export const PHONE_TEL = "+420722447002";
-export const PHONE_DISPLAY = "722\u00A0447\u00A0002";
-export const EMAIL = "psisalon.pucci@gmail.com";
-export const BOOKING_URL = "https://psi-salon-pucci.reservio.com";
-export const STREET = "náměstí Míru 69/25";
-export const CITY = "Svitavy";
-export const OWNER = "Klára Zelinka, DiS";
-export const ICO = "21618241";
+import { salon } from "@/lib/salon";
+
+export const PHONE_TEL = salon.phoneTel;
+export const PHONE_DISPLAY = salon.phoneDisplay;
+export const EMAIL = salon.email;
+export const BOOKING_URL = salon.bookingUrl;
+export const STREET = salon.street;
+export const POSTCODE = salon.postcode;
+export const CITY = salon.city;
+export const ADDRESS_LINE = `${salon.street}, ${salon.postcode} ${salon.city}`;
+export const OWNER = salon.owner;
+export const ICO = salon.ico;
 export const PRICE_TBA = "cena dle plemene";
 
 export const nav = [
@@ -89,22 +93,6 @@ export const services = [
     text: "Dentální hygiena spočívá v odstranění plaku na zubech za použití ultrazvukového kartáčku s následným mechanickým očištěním. Působí preventivně proti zánětu dásní, vzniku paradontózy, tvorby zubního plaku, následně kamene a tím zabraňuje vypadávání zubů.",
     note: "Dentální hygiena rozhodně nenahrazuje veterinární ošetření, je to pouze kosmetický efekt, nikoli léčebný.",
   },
-] as const;
-
-export const prices = [
-  { service: "Koupání, fénování", price: PRICE_TBA },
-  { service: "Stříhání", price: PRICE_TBA },
-  { service: "Trimování", price: PRICE_TBA },
-  { service: "Vyčesání srsti", price: PRICE_TBA },
-  { service: "Dentální hygiena bez anestezie", price: PRICE_TBA },
-  { service: "Další služby (drápky, uši, anální žlázy)", price: PRICE_TBA },
-  { service: "Rozvoz po Svitavách", price: "100\u00A0Kč" },
-  { service: "Rozvoz do okolních obcí", price: "150\u00A0Kč" },
-] as const;
-
-export const priceNotes = [
-  "Rozvoz platí pro Svitavy a okolí (Hradec nad Svitavou, Vendolí, Radiměř, Opatovec, Koclířov, Javorník,…), pokud se nemáte jak do salonu dostat.",
-  "Platba je možná v\u00A0hotovosti nebo přes QR kód.",
 ] as const;
 
 export const notes = [

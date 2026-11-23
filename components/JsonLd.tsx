@@ -1,5 +1,6 @@
-import { CITY, EMAIL, ICO, PHONE_TEL, STREET } from "@/lib/content";
+import { CITY, EMAIL, ICO, PHONE_TEL, POSTCODE, STREET } from "@/lib/content";
 import { buildFaqPageJsonLd } from "@/lib/faq";
+import { isFilled, salon, socialLinks } from "@/lib/salon";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/site";
 
 function jsonLdScript(data: unknown) {
@@ -27,6 +28,7 @@ export function JsonLd() {
     address: {
       "@type": "PostalAddress",
       streetAddress: STREET,
+      postalCode: POSTCODE,
       addressLocality: CITY,
       addressCountry: "CZ",
     },
@@ -47,6 +49,41 @@ export function JsonLd() {
     currenciesAccepted: "CZK",
     paymentAccepted: "Hotovost, QR kód",
   };
+
+  const links = socialLinks().map((item) => item.href);
+  if (links.length > 0) {
+    Object.assign(business, { sameAs: links });
+  }
+
+  if (isFilled(salon.openingHours)) {
+    Object.assign(business, { openingHours: salon.openingHours.trim() });
+  }
+
+  if (salon.priceList.length > 0) {
+    Object.assign(business, {
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Ceník",
+        itemListElement: salon.priceList.map((item) => {
+          const offer: Record<string, unknown> = {
+            "@type": "Offer",
+            name: item.service,
+            description: item.price,
+            itemOffered: {
+              "@type": "Service",
+              name: item.service,
+            },
+          };
+          const amount = item.price.trim().match(/^(\d+(?:[.,]\d+)?)\s*(?:Kč)?$/);
+          if (amount) {
+            offer.price = amount[1].replace(",", ".");
+            offer.priceCurrency = "CZK";
+          }
+          return offer;
+        }),
+      },
+    });
+  }
 
   return (
     <>

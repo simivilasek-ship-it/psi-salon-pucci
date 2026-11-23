@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/strip-client-js.mjs",
+    "build": "next build && node scripts/strip-client-js.mjs && node scripts/write-cname.mjs",
     "start": "next start"
   },
   "dependencies": {

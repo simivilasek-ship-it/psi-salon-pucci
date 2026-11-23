@@ -20,8 +20,9 @@ import {
 import { faq } from "@/lib/faq";
 import imageManifest from "@/lib/image-manifest.json";
 import { withBase } from "@/lib/paths";
+import { isFilled, openingHoursText, salon, socialLinks } from "@/lib/salon";
 
-const mapQuery = encodeURIComponent(`${STREET}, ${CITY}`);
+const mapQuery = encodeURIComponent(`${STREET}, ${salon.postcode} ${CITY}`);
 const MAP_URL = `https://mapy.cz/zakladni?q=${mapQuery}`;
 const MAP_EMBED = `https://maps.google.com/maps?q=${mapQuery}&z=16&hl=cs&output=embed`;
 
@@ -46,7 +47,7 @@ export function HomePage() {
         <div className="hero-shell">
           <div className="hero-copy">
             <p className="kicker hero-kicker hero-enter hero-enter-1">
-              {STREET} · {CITY}
+              {STREET} · {salon.postcode} {CITY}
             </p>
             <h1 id="hero-heading" className="hero-enter hero-enter-2">
               Stříhání a&nbsp;úprava psů ve&nbsp;Svitavách
@@ -91,7 +92,9 @@ export function HomePage() {
                   <div className="service-card-top">
                     <div className="service-card-title">
                       <h3>{item.title}</h3>
-                      <p className="service-price tba">{PRICE_TBA}</p>
+                      <p className={listedPrice(item.title) ? "service-price" : "service-price tba"}>
+                        {listedPrice(item.title) ?? PRICE_TBA}
+                      </p>
                     </div>
                     <p className="service-card-desc">{item.text}</p>
                   </div>
@@ -112,6 +115,28 @@ export function HomePage() {
               </li>
             ))}
           </ul>
+          {salon.priceList.length > 0 ? (
+            <div className="price-block">
+              <h3 className="price-heading">Ceník</h3>
+              <table className="price-table">
+                <caption className="sr-only">Ceník služeb</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Služba</th>
+                    <th scope="col">Cena</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {salon.priceList.map((row) => (
+                    <tr key={row.service}>
+                      <td>{row.service}</td>
+                      <td>{row.price}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
           <div className="services-cta">
             <a className="btn btn-solid" href={BOOKING_URL}>
               Rezervovat termín
@@ -136,6 +161,7 @@ export function HomePage() {
               </figure>
             ))}
           </div>
+          <BeforeAfter />
         </div>
       </section>
 
@@ -305,10 +331,27 @@ export function HomePage() {
             <div className="contact-list">
               <ContactCard href={`tel:${PHONE_TEL}`} icon={<IconPhone />} label="Telefon" value={PHONE_DISPLAY} />
               <ContactCard href={`mailto:${EMAIL}`} icon={<IconMail />} label="E-mail" value={EMAIL} />
-              <ContactCard icon={<IconPin />} label="Adresa" value={`${STREET}, ${CITY}`} />
-              <ContactCard icon={<IconClock />} label="Otevírací doba" value="dle telefonické domluvy" />
+              <ContactCard icon={<IconPin />} label="Adresa" value={`${STREET}, ${salon.postcode} ${CITY}`} />
+              <ContactCard icon={<IconClock />} label="Otevírací doba" value={openingHoursText()} />
               <ContactCard href={BOOKING_URL} icon={<IconCalendar />} label="Online rezervace" value="Reservio" />
+              {socialLinks().map((link) => (
+                <ContactCard
+                  key={link.href}
+                  href={link.href}
+                  external
+                  icon={<IconLink />}
+                  label={link.label}
+                  value={link.label}
+                />
+              ))}
             </div>
+            {isFilled(salon.googleReviewsUrl) ? (
+              <p className="reviews-link">
+                <a className="btn btn-outline" href={salon.googleReviewsUrl.trim()} target="_blank" rel="noopener noreferrer">
+                  Recenze na Googlu
+                </a>
+              </p>
+            ) : null}
             <p className="owner">{OWNER}</p>
           </div>
           <div className="mapbox">
@@ -329,6 +372,35 @@ export function HomePage() {
 
       <SectionDivider from="bg" to="dark" />
     </main>
+  );
+}
+
+function listedPrice(service: string): string | undefined {
+  const row = salon.priceList.find((item) => item.service === service);
+  return row && isFilled(row.price) ? row.price : undefined;
+}
+
+function BeforeAfter() {
+  if (salon.beforeAfterPairs.length === 0) return null;
+
+  return (
+    <div className="ba">
+      <h3 className="price-heading">Před a po</h3>
+      <div className="ba-list">
+        {salon.beforeAfterPairs.map((pair) => (
+          <figure className="ba-pair" key={`${pair.before}-${pair.after}`}>
+            <div>
+              <img src={withBase(pair.before)} alt={pair.altBefore} width={800} height={1000} />
+              <figcaption>Před</figcaption>
+            </div>
+            <div>
+              <img src={withBase(pair.after)} alt={pair.altAfter} width={800} height={1000} />
+              <figcaption>Po</figcaption>
+            </div>
+          </figure>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -357,11 +429,13 @@ function SectionHead({
 
 function ContactCard({
   href,
+  external = false,
   icon,
   label,
   value,
 }: {
   href?: string;
+  external?: boolean;
   icon: ReactNode;
   label: string;
   value: string;
@@ -381,9 +455,36 @@ function ContactCard({
   }
 
   return (
-    <a className="contact-card" href={href}>
+    <a
+      className="contact-card"
+      href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {body}
     </a>
+  );
+}
+
+function IconLink() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M10 13a5 5 0 0 0 7.07.07l1.41-1.41a5 5 0 0 0-7.07-7.07L10 6"
+      />
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M14 11a5 5 0 0 0-7.07-.07L5.5 12.34a5 5 0 0 0 7.07 7.07L14 18"
+      />
+    </svg>
   );
 }
 
