@@ -20,4 +20,4 @@ export const SITE_TITLE = "Psí salon Pucci | stříhání psů Svitavy";
 export const SITE_DESCRIPTION =
   "Psí salon Svitavy na náměstí Míru. Stříhání psů, úprava srsti, trimování a dentální hygiena. Klára Zelinka, DiS. Objednání telefonicky nebo přes Reservio.";
 
-export const SITE_OG_IMAGE = `${SITE_URL}/og.jpg`;
+export const SITE_OG_IMAGE = `${SITE_URL}/og-share.jpg`;

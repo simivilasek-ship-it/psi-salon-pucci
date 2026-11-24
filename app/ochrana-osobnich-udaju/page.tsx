@@ -22,8 +22,11 @@ export default function PrivacyPage() {
         <h2>Účel zpracování</h2>
         <p>
           Zpracováváme údaje, které nám sdělíte při objednání úpravy: telefonicky, e-mailem nebo přes online
-          rezervaci. Online rezervace probíhá přes <a href={BOOKING_URL}>Reservio</a>. Údaje slouží k domluvě
-          termínu a provedení úpravy.
+          rezervaci. Online rezervace probíhá přes{" "}
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+            Reservio
+          </a>
+          . Údaje slouží k domluvě termínu a provedení úpravy.
         </p>
         <h2>Doba uchování</h2>
         <p>

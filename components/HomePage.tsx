@@ -75,7 +75,7 @@ export function HomePage() {
               Místo, kde je péče o&nbsp;vaše mazlíčky radostí. „Protože každý pes si zaslouží hvězdnou péči.“
             </p>
             <div className="actions hero-enter hero-enter-4">
-              <a className="btn btn-solid" href={BOOKING_URL}>
+              <a className="btn btn-solid" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 Rezervovat termín
               </a>
               <a className="btn btn-outline hero-call" href={`tel:${PHONE_TEL}`}>
@@ -136,7 +136,7 @@ export function HomePage() {
             })}
           </ul>
           <div className="services-cta">
-            <a className="btn btn-solid" href={BOOKING_URL}>
+            <a className="btn btn-solid" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               Rezervovat termín
             </a>
           </div>
@@ -500,11 +500,7 @@ function ContactCard({
   }
 
   return (
-    <a
-      className="contact-card"
-      href={href}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-    >
+    <a className="contact-card" href={href}>
       {body}
     </a>
   );

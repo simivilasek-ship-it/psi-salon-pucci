@@ -4,11 +4,11 @@ import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { withBase } from "@/lib/paths";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_OG_IMAGE, SITE_TITLE, SITE_URL } from "@/lib/site";
 import "./fonts.css";
 import "./globals.css";
 
-const ogAlt = "Černý pejsek s oranžovou mašlí z Psího salonu Pucci";
+const ogAlt = "Australský ovčák po úpravě, Psí salon Pucci, stříhání psů ve Svitavách";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     locale: "cs_CZ",
     images: [
       {
-        url: "/og.jpg",
+        url: SITE_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: ogAlt,
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ["/og.jpg"],
+    images: [SITE_OG_IMAGE],
   },
   robots: {
     index: true,
