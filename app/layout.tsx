@@ -8,7 +8,7 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_OG_IMAGE, SITE_TITLE, SITE_URL } from
 import "./fonts.css";
 import "./globals.css";
 
-const ogAlt = "Australský ovčák po úpravě, Psí salon Pucci, stříhání psů ve Svitavách";
+const ogAlt = "Logo Psí salon Pucci";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
