@@ -20,6 +20,7 @@ export const nav = [
   { href: "/#galerie", label: "Galerie" },
   { href: "/#faq", label: "FAQ" },
   { href: "/#o-mne", label: "O mně" },
+  { href: "/#recenze", label: "Recenze" },
   { href: "/#kontakt", label: "Kontakt" },
 ];
 
@@ -93,21 +94,6 @@ export const services = [
     wide: true,
     text: "Dentální hygiena spočívá v odstranění plaku na zubech za použití ultrazvukového kartáčku s následným mechanickým očištěním. Působí preventivně proti zánětu dásní, vzniku paradontózy, tvorby zubního plaku, následně kamene a tím zabraňuje vypadávání zubů.",
     note: "Dentální hygiena rozhodně nenahrazuje veterinární ošetření, je to pouze kosmetický efekt, nikoli léčebný.",
-  },
-] as const;
-
-export const notes = [
-  {
-    title: "Kompletní úprava včetně koupání",
-    text: "Psy přijímáme pouze na kompletní úpravu včetně koupání. Bez koupání (psa si vykoupe majitel sám) přijímáme pouze výjimečně po domluvě v případě starého nebo agresivního psa a byla by pro něj návštěva salonu hodně náročná.",
-  },
-  {
-    title: "Úprava probíhá bez majitele",
-    text: "Úprava psa probíhá bez přítomnosti majitele pro lepší průběh celého procesu a kontaktu mezi psem a střihačkou.",
-  },
-  {
-    title: "Jak se objednat",
-    text: "Objednat se můžete telefonicky nebo přes rezervační systém Reservio.",
   },
 ] as const;
 

@@ -46,7 +46,7 @@ export const salon = {
 
   /**
    * Odkaz na profil recenzí na Google (celé https URL).
-   * Prázdné = blok „Recenze na Googlu“ se neukáže. Hvězdičky se nevykreslují.
+   * Prázdné = tlačítka otevřou vyhledání salonu. Číslo a texty recenzí se nevymýšlí.
    */
   googleReviewsUrl: "",
 

@@ -8,11 +8,9 @@ import {
   CITY,
   EMAIL,
   gallery,
-  notes,
   OWNER,
   PHONE_DISPLAY,
   PHONE_TEL,
-  PRICE_TBA,
   services,
   servicesIntro,
   STREET,
@@ -25,13 +23,15 @@ import { isFilled, openingHoursText, salon, socialLinks } from "@/lib/salon";
 const mapQuery = encodeURIComponent(`${STREET}, ${salon.postcode} ${CITY}`);
 const MAP_URL = `https://mapy.cz/zakladni?q=${mapQuery}`;
 const MAP_EMBED = `https://maps.google.com/maps?q=${mapQuery}&z=16&hl=cs&output=embed`;
+const googleReviewsHref = isFilled(salon.googleReviewsUrl)
+  ? salon.googleReviewsUrl.trim()
+  : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Psí salon Pucci, ${STREET}, ${CITY}`)}`;
 
 const heroFacts = [
   { value: "Psi všech plemen", label: "i kočky" },
   { value: "Objednání", label: "Reservio nebo telefon" },
 ] as const;
 
-const hasGoogleReviews = isFilled(salon.googleReviewsUrl);
 const hasBeforeAfter = salon.beforeAfterPairs.length > 0;
 
 const socialValue: Record<string, string> = {
@@ -47,22 +47,9 @@ function socialIcon(label: string) {
   return <IconMail />;
 }
 
-function bookingNoteText(channels: string[]) {
-  if (channels.length === 0) {
-    return "Objednat se můžete telefonicky nebo přes rezervační systém Reservio.";
-  }
-  const extras = channels.join(", ");
-  return `Objednat se můžete telefonicky, přes ${extras} nebo rezervační systém Reservio.`;
-}
-
 export function HomePage() {
   const hoursValue = openingHoursText();
   const contactSocials = socialLinks();
-  const infoNotes = notes.map((note) =>
-    note.title === "Jak se objednat"
-      ? { ...note, text: bookingNoteText(contactSocials.map((link) => link.label)) }
-      : note,
-  );
 
   return (
     <main id="obsah" tabIndex={-1}>
@@ -117,58 +104,37 @@ export function HomePage() {
           <SectionHead id="sluzby-heading" kicker="Nabídka" title="Služby" center>
             <p>{servicesIntro}</p>
           </SectionHead>
+          {salon.priceList.length === 0 ? <p className="services-rate">Cena dle plemene.</p> : null}
           <ul className="service-grid">
-            {services.map((item) => (
-              <li key={item.title}>
-                <article className="service-card">
-                  <div className="service-card-top">
-                    <div className="service-card-title">
-                      <h3>{item.title}</h3>
-                      <p className={listedPrice(item.title) ? "service-price" : "service-price tba"}>
-                        {listedPrice(item.title) ?? PRICE_TBA}
-                      </p>
+            {services.map((item) => {
+              const price = listedPrice(item.title);
+              const wide = "wide" in item && item.wide;
+              return (
+                <li key={item.title} className={wide ? "is-wide" : undefined}>
+                  <article className="service-card">
+                    <div className="service-card-top">
+                      <div className="service-card-title">
+                        <h3>{item.title}</h3>
+                        {price ? <p className="service-price">{price}</p> : null}
+                      </div>
+                      <p className="service-card-desc">{item.text}</p>
                     </div>
-                    <p className="service-card-desc">{item.text}</p>
-                  </div>
-                  <div className="service-card-foot">
                     {"note" in item && item.note ? (
-                      <details className="service-more">
-                        <summary>
-                          Více informací
-                          <span aria-hidden="true">↓</span>
-                        </summary>
-                        <p className="note">{item.note}</p>
-                      </details>
-                    ) : (
-                      <span className="service-more-spacer" aria-hidden="true" />
-                    )}
-                  </div>
-                </article>
-              </li>
-            ))}
+                      <div className="service-card-foot">
+                        <details className="service-more">
+                          <summary>
+                            Více informací
+                            <span aria-hidden="true">↓</span>
+                          </summary>
+                          <p className="note">{item.note}</p>
+                        </details>
+                      </div>
+                    ) : null}
+                  </article>
+                </li>
+              );
+            })}
           </ul>
-          {salon.priceList.length > 0 ? (
-            <div className="price-block">
-              <h3 className="price-heading">Ceník</h3>
-              <table className="price-table">
-                <caption className="sr-only">Ceník služeb</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Služba</th>
-                    <th scope="col">Cena</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {salon.priceList.map((row) => (
-                    <tr key={row.service}>
-                      <td>{row.service}</td>
-                      <td>{row.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
           <div className="services-cta">
             <a className="btn btn-solid" href={BOOKING_URL}>
               Rezervovat termín
@@ -181,25 +147,14 @@ export function HomePage() {
         <section className="section" id="cenik" aria-labelledby="cenik-heading">
           <div className="wrap">
             <SectionHead id="cenik-heading" kicker="Služby" title="Ceník" center />
-            <div className="price-card table-wrap">
-              <table>
-                <caption className="sr-only">Ceník služeb</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Služba</th>
-                    <th scope="col">Cena</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {salon.priceList.map((row) => (
-                    <tr key={row.service}>
-                      <td>{row.service}</td>
-                      <td>{row.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <dl className="price-list">
+              {salon.priceList.map((row) => (
+                <div key={row.service}>
+                  <dt>{row.service}</dt>
+                  <dd>{row.price}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
       ) : null}
@@ -268,28 +223,7 @@ export function HomePage() {
         </section>
       ) : null}
 
-      <SectionDivider from="alt" to="bg" flip />
-
-      <section className="section" id="info" aria-labelledby="info-heading">
-        <div className="wrap">
-          <SectionHead id="info-heading" kicker="Než přijdete" title="Důležité informace" center />
-          <ul className="info-list">
-            {infoNotes.map((note, index) => (
-              <li key={note.title} className="info-card">
-                <span className="info-icon" aria-hidden="true">
-                  {index === 0 ? <IconDroplet /> : null}
-                  {index === 1 ? <IconDoor /> : null}
-                  {index === 2 ? <IconCalendar /> : null}
-                </span>
-                <h3 className="info-card-title">{note.title}</h3>
-                <p className="info-card-text">{note.text}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <SectionDivider from="bg" to="brand" />
+      <SectionDivider from="alt" to="brand" />
 
       <section className="section section-brand" id="o-mne" aria-labelledby="about-heading">
         <div className="wrap about">
@@ -397,25 +331,36 @@ export function HomePage() {
 
       <SectionDivider from="brand" to="bg" flip />
 
-      {hasGoogleReviews ? (
-        <section className="section" id="recenze" aria-labelledby="recenze-heading">
-          <div className="wrap">
-            <SectionHead id="recenze-heading" kicker="Hodnocení" title="Recenze" center>
-              <p>Přečtěte si zkušenosti majitelů na&nbsp;Googlu.</p>
-            </SectionHead>
-            <div className="reviews-cta">
-              <a
-                className="btn btn-solid"
-                href={salon.googleReviewsUrl.trim()}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Zobrazit recenze na Googlu
+      <section className="section" id="recenze" aria-labelledby="recenze-heading">
+        <div className="wrap">
+          <SectionHead id="recenze-heading" kicker="Google" title="Recenze" center>
+              <p>Celé texty jsou na Google.</p>
+          </SectionHead>
+          <div className="reviews">
+            <p className="review-stars" aria-hidden="true">
+              {Array.from({ length: 5 }, (_, index) => (
+                <svg key={index} viewBox="0 0 24 24">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                    d="M12 2.6l2.84 5.97 6.56.86-4.8 4.55 1.2 6.5L12 17.27 6.2 20.48l1.2-6.5-4.8-4.55 6.56-.86z"
+                  />
+                </svg>
+              ))}
+            </p>
+            <div className="reviews-actions">
+              <a className="btn btn-solid" href={googleReviewsHref} target="_blank" rel="noopener noreferrer">
+                Číst na Google
+              </a>
+              <a className="btn btn-outline" href={googleReviewsHref} target="_blank" rel="noopener noreferrer">
+                Napsat recenzi
               </a>
             </div>
           </div>
-        </section>
-      ) : null}
+        </div>
+      </section>
 
       <section className="section" id="faq" aria-labelledby="faq-heading">
         <div className="wrap faq-wrap">
@@ -486,7 +431,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <SectionDivider from="bg" to="dark" />
+      <SectionDivider from="bg" to="brand" />
     </main>
   );
 }
@@ -562,28 +507,6 @@ function ContactCard({
     >
       {body}
     </a>
-  );
-}
-
-function IconDroplet() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M12 2.2C8.4 7.1 6 10.7 6 14a6 6 0 0 0 12 0c0-3.3-2.4-6.9-6-11.8Zm0 16.3A3.5 3.5 0 0 1 8.5 15c0-1.9 1.3-4.1 3.5-7.1 2.2 3 3.5 5.2 3.5 7.1A3.5 3.5 0 0 1 12 18.5Z"
-      />
-    </svg>
-  );
-}
-
-function IconDoor() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M19 19V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v14H3v2h18v-2h-2ZM9 19V5h8v14H9Zm5.5-6.5A1.25 1.25 0 1 1 13 11.25 1.25 1.25 0 0 1 14.5 12.5Z"
-      />
-    </svg>
   );
 }
 
