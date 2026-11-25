@@ -4,18 +4,7 @@ import { isFilled, salon, socialLinks as salonSocialLinks } from "@/lib/salon";
 import { SITE_NAME } from "@/lib/site";
 
 function footerNote() {
-  const channels = ["telefonicky", "přes Reservio"];
-  const social = salonSocialLinks();
-  for (const link of social) {
-    channels.push(link.label);
-  }
-
-  const booking =
-    channels.length === 2
-      ? `${channels[0]} nebo ${channels[1]}`
-      : `${channels.slice(0, -1).join(", ")} nebo ${channels[channels.length - 1]}`;
-
-  return `Objednání ${booking}. Platba v hotovosti nebo přes QR kód.`;
+  return "Objednat se můžete telefonicky, přes Messenger, WhatsApp, Instagram nebo rezervační systém Reservio. Platba v\u00A0hotovosti nebo přes QR kód.";
 }
 
 export function Footer() {

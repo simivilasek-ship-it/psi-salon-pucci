@@ -3,9 +3,12 @@ import { Photo } from "@/components/Photo";
 import { SectionDivider } from "@/components/SectionDivider";
 import {
   about,
+  beforeVisit,
   BOOKING_URL,
   certificates,
   CITY,
+  depositIntro,
+  depositRules,
   EMAIL,
   gallery,
   OWNER,
@@ -35,14 +38,17 @@ const heroFacts = [
 const hasBeforeAfter = salon.beforeAfterPairs.length > 0;
 
 const socialValue: Record<string, string> = {
-  Instagram: "Psí salon Pucci",
+  Instagram: "psi_salon_pucci",
+  Facebook: "Psí salon Pucci",
   WhatsApp: PHONE_DISPLAY,
+  "WhatsApp kanál": "Tipy a volné termíny",
   Messenger: "Napsat zprávu",
 };
 
 function socialIcon(label: string) {
   if (label === "Instagram") return <IconInstagram />;
-  if (label === "WhatsApp") return <IconWhatsApp />;
+  if (label === "Facebook") return <IconFacebook />;
+  if (label === "WhatsApp" || label === "WhatsApp kanál") return <IconWhatsApp />;
   if (label === "Messenger") return <IconMessenger />;
   return <IconMail />;
 }
@@ -392,6 +398,55 @@ export function HomePage() {
         </div>
       </section>
 
+      <section className="section" id="pred-navstevou" aria-labelledby="pred-navstevou-heading">
+        <div className="wrap">
+          <SectionHead id="pred-navstevou-heading" kicker="Než přijdete" title="Před návštěvou salonu" />
+          <ul className="rules">
+            {beforeVisit.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p className="booking-line">
+            Objednat se můžete{" "}
+            <a href={`tel:${PHONE_TEL}`}>telefonicky</a>, přes Messenger,{" "}
+            {isFilled(salon.whatsappChannelUrl) ? (
+              <a href={salon.whatsappChannelUrl} target="_blank" rel="noopener noreferrer">
+                WhatsApp
+              </a>
+            ) : (
+              "WhatsApp"
+            )}
+            ,{" "}
+            {isFilled(salon.instagramUrl) ? (
+              <a href={salon.instagramUrl} target="_blank" rel="noopener noreferrer">
+                Instagram
+              </a>
+            ) : (
+              "Instagram"
+            )}{" "}
+            nebo rezervační systém{" "}
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+              Reservio
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
+      <section className="section" id="zaloha" aria-labelledby="zaloha-heading">
+        <div className="wrap">
+          <SectionHead id="zaloha-heading" kicker="Noví klienti" title="Záloha na termín pro nové klienty" />
+          <p className="rules-lead">{depositIntro}</p>
+          <ul className="rules">
+            {depositRules.map((rule) => (
+              <li key={rule.title}>
+                <strong>{rule.title}.</strong> {rule.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <section className="section" id="kontakt" aria-labelledby="kontakt-heading">
         <div className="wrap contact">
           <div>
@@ -414,6 +469,23 @@ export function HomePage() {
               ))}
             </div>
             <p className="owner">{OWNER}</p>
+            {isFilled(salon.whatsappChannelUrl) ? (
+              <figure className="channel-qr">
+                <a href={salon.whatsappChannelUrl} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={withBase("/whatsapp-kanal-qr.jpg")}
+                    alt="QR kód na WhatsApp kanál Psí salon Pucci"
+                    width={992}
+                    height={1056}
+                  />
+                </a>
+                <figcaption>
+                  <a href={salon.whatsappChannelUrl} target="_blank" rel="noopener noreferrer">
+                    Přidejte se na WhatsApp kanál pro tipy, akce a&nbsp;volné termíny
+                  </a>
+                </figcaption>
+              </figure>
+            ) : null}
           </div>
           <div className="mapbox">
             <iframe
@@ -558,6 +630,17 @@ function IconCalendar() {
       <path
         fill="currentColor"
         d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3V2Zm13 8H4v10h16V10Z"
+      />
+    </svg>
+  );
+}
+
+function IconFacebook() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.6l.4-3H13v-2c0-.6.4-1 1-1Z"
       />
     </svg>
   );

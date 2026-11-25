@@ -1215,6 +1215,51 @@ th:last-child {
   margin-top: 8px;
 }
 
+.rules {
+  max-width: 44rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rules li {
+  margin: 0;
+  padding: 14px 0 14px 14px;
+  border-top: 1px solid var(--line);
+  border-left: 3px solid var(--brand);
+}
+
+.rules li strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.rules-lead,
+.booking-line {
+  max-width: 44rem;
+  margin: 0 0 18px;
+}
+
+.booking-line {
+  margin: 18px 0 0;
+}
+
+.channel-qr {
+  margin: 22px 0 0;
+}
+
+.channel-qr img {
+  width: min(280px, 100%);
+  height: auto;
+}
+
+.channel-qr figcaption {
+  margin-top: 8px;
+  max-width: 16rem;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
 .info-list {
   display: grid;
   grid-template-columns: 1fr;

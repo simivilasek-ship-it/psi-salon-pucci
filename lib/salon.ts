@@ -51,22 +51,31 @@ export const salon = {
   googleReviewsUrl: "",
 
   /** Celé https URL profilu. Prázdné = odkaz se neukáže. */
-  instagramUrl: "",
+  instagramUrl: "https://www.instagram.com/psi_salon_pucci/",
+
+  /** Odkaz na Facebook od Kláry (24. 11. 2026). */
+  facebookUrl: "https://www.facebook.com/share/14thz84UbMH/",
 
   /**
-   * Číslo pro WhatsApp, např. "+420722447002".
-   * Prázdné = odkaz se neukáže. Z čísla se složí https://wa.me/…
+   * Číslo pro osobní WhatsApp, např. "+420722447002".
+   * Prázdné = odkaz wa.me se neukáže. Kanál níže sem nepatří.
    */
   whatsappNumber: "",
 
-  /** Celé https URL Messengeru (m.me nebo facebook.com/messages). Prázdné = odkaz se neukáže. */
+  /** WhatsApp kanál od Kláry (24. 11. 2026). Prázdné = QR a odkaz se neukážou. */
+  whatsappChannelUrl: "https://whatsapp.com/channel/0029VbCHGHMLSmbYkZR0zG04",
+
+  /**
+   * Celé https URL Messengeru (m.me).
+   * Share odkaz na Facebook ani telefon z něj nejdou spolehlivě složit, proto zůstává prázdné.
+   */
   messengerUrl: "",
 
   /**
-   * Text otevírací doby. Prázdné = na webu zůstane „dle telefonické domluvy“
-   * a do strukturovaných dat se hodiny nezapíšou.
+   * Text otevírací doby od Kláry (24. 11. 2026).
+   * Prázdné = na webu zůstane „dle telefonické domluvy“.
    */
-  openingHours: "",
+  openingHours: "pondělí až sobota, dle předchozí domluvy",
 
   /**
    * Dvojice fotek před a po. Prázdné = sekce se neukáže.
@@ -94,9 +103,15 @@ export function socialLinks(): SocialLink[] {
   if (isFilled(salon.instagramUrl)) {
     links.push({ label: "Instagram", href: salon.instagramUrl.trim() });
   }
+  if (isFilled(salon.facebookUrl)) {
+    links.push({ label: "Facebook", href: salon.facebookUrl.trim() });
+  }
   const whatsappDigits = salon.whatsappNumber.replace(/\D/g, "");
   if (whatsappDigits) {
     links.push({ label: "WhatsApp", href: `https://wa.me/${whatsappDigits}` });
+  }
+  if (isFilled(salon.whatsappChannelUrl)) {
+    links.push({ label: "WhatsApp kanál", href: salon.whatsappChannelUrl.trim() });
   }
   if (isFilled(salon.messengerUrl)) {
     links.push({ label: "Messenger", href: salon.messengerUrl.trim() });

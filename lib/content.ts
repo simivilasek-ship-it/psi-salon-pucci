@@ -14,6 +14,25 @@ export const OWNER = salon.owner;
 export const ICO = salon.ico;
 export const PRICE_TBA = "cena dle plemene";
 
+/** Znění z e-mailu Kláry Zelinky, 24. 11. 2026. */
+export const beforeVisit = [
+  "Psy přijímáme pouze na kompletní úpravu včetně koupání.",
+  "Bez koupání (psa si vykoupe majitel sám) přijímáme pouze výjimečně po domluvě, a\u00A0to v\u00A0případě starého nebo agresivního psa, kdy by pro něj návštěva salonu byla hodně náročná.",
+  "Úprava psa probíhá bez přítomnosti majitele pro lepší průběh celého procesu a\u00A0kontaktu mezi psem a\u00A0střihačkou.",
+] as const;
+
+export const depositIntro =
+  "Protože se stále častěji stává, že zákazníci na sjednaný termín nedorazí bez předchozí omluvy, zavádím pro nové zákazníky zálohy na rezervaci.";
+
+export const depositRules = [
+  { title: "Rezervace", text: "Při objednání termínu je potřeba uhradit zálohu." },
+  { title: "Účast na termínu", text: "Pokud dorazíte, celá záloha se odečte z\u00A0ceny služby." },
+  {
+    title: "Neomluvená neúčast",
+    text: "Pokud bez včasné omluvy nedorazíte minimálně 24\u00A0hodin předem, záloha propadá.",
+  },
+] as const;
+
 export const nav = [
   { href: "/#sluzby", label: "Služby" },
   ...(salon.priceList.length > 0 ? [{ href: "/#cenik", label: "Ceník" }] : []),
