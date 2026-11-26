@@ -29,6 +29,25 @@ const MAP_EMBED = `https://maps.google.com/maps?q=${mapQuery}&z=16&hl=cs&output=
 const googleReviewsHref = isFilled(salon.googleReviewsUrl)
   ? salon.googleReviewsUrl.trim()
   : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Psí salon Pucci, ${STREET}, ${CITY}`)}`;
+const googleRating =
+  salon.googleRating !== null &&
+  Number.isFinite(salon.googleRating) &&
+  salon.googleRating >= 1 &&
+  salon.googleRating <= 5
+    ? salon.googleRating
+    : null;
+const googleReviewCount =
+  salon.googleReviewCount !== null &&
+  Number.isInteger(salon.googleReviewCount) &&
+  salon.googleReviewCount > 0
+    ? salon.googleReviewCount
+    : null;
+
+function reviewCountLabel(count: number) {
+  if (count === 1) return "1 recenze";
+  if (count >= 2 && count <= 4) return `${count} recenze`;
+  return `${count} recenzí`;
+}
 
 const heroFacts = [
   { value: "Psi všech plemen", label: "i kočky" },
@@ -340,22 +359,54 @@ export function HomePage() {
       <section className="section" id="recenze" aria-labelledby="recenze-heading">
         <div className="wrap">
           <SectionHead id="recenze-heading" kicker="Google" title="Recenze" center>
-              <p>Celé texty jsou na Google.</p>
+            <p>Hodnocení přímo z Google — otevřete si celé recenze tam.</p>
           </SectionHead>
           <div className="reviews">
-            <p className="review-stars" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, index) => (
-                <svg key={index} viewBox="0 0 24 24">
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinejoin="round"
-                    d="M12 2.6l2.84 5.97 6.56.86-4.8 4.55 1.2 6.5L12 17.27 6.2 20.48l1.2-6.5-4.8-4.55 6.56-.86z"
-                  />
-                </svg>
-              ))}
-            </p>
+            {googleRating !== null ? (
+              <>
+                <p
+                  className="review-stars"
+                  aria-label={`${googleRating.toLocaleString("cs-CZ", { maximumFractionDigits: 1 })} z 5 hvězdiček`}
+                >
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <svg key={index} viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fill={index < Math.round(googleRating) ? "currentColor" : "none"}
+                        stroke="currentColor"
+                        strokeWidth={index < Math.round(googleRating) ? "0" : "1.5"}
+                        strokeLinejoin="round"
+                        d="M12 2.6l2.84 5.97 6.56.86-4.8 4.55 1.2 6.5L12 17.27 6.2 20.48l1.2-6.5-4.8-4.55 6.56-.86z"
+                      />
+                    </svg>
+                  ))}
+                </p>
+                <p className="reviews-score" aria-hidden="true">
+                  {googleRating.toLocaleString("cs-CZ", {
+                    minimumFractionDigits: googleRating % 1 === 0 ? 0 : 1,
+                    maximumFractionDigits: 1,
+                  })}
+                </p>
+                <p className="reviews-note">
+                  {googleReviewCount !== null
+                    ? `na základě ${reviewCountLabel(googleReviewCount)} na Google`
+                    : "průměrné hodnocení na Google"}
+                </p>
+              </>
+            ) : (
+              <p className="review-stars" aria-hidden="true">
+                {Array.from({ length: 5 }, (_, index) => (
+                  <svg key={index} viewBox="0 0 24 24">
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinejoin="round"
+                      d="M12 2.6l2.84 5.97 6.56.86-4.8 4.55 1.2 6.5L12 17.27 6.2 20.48l1.2-6.5-4.8-4.55 6.56-.86z"
+                    />
+                  </svg>
+                ))}
+              </p>
+            )}
             <div className="reviews-actions">
               <a className="btn btn-solid" href={googleReviewsHref} target="_blank" rel="noopener noreferrer">
                 Číst na Google

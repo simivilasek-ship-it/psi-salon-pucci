@@ -48,7 +48,14 @@ export const salon = {
    * Odkaz na profil recenzí na Google (celé https URL).
    * Prázdné = tlačítka otevřou vyhledání salonu. Číslo a texty recenzí se nevymýšlí.
    */
-  googleReviewsUrl: "",
+  googleReviewsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Ps%C3%AD%20salon%20Pucci%2C%20n%C3%A1m%C4%9Bst%C3%AD%20M%C3%ADru%2069%2F25%2C%20Svitavy",
+
+  /**
+   * Průměr a počet z Google (stav 2026-11). null = na webu jen obrysové hvězdy bez čísla.
+   */
+  googleRating: 5 as number | null,
+  googleReviewCount: 2 as number | null,
 
   /** Celé https URL profilu. Prázdné = odkaz se neukáže. */
   instagramUrl: "https://www.instagram.com/psi_salon_pucci/",

@@ -91,6 +91,29 @@ export function JsonLd() {
     business.openingHours = salon.openingHours.trim();
   }
 
+  const rating =
+    salon.googleRating !== null &&
+    Number.isFinite(salon.googleRating) &&
+    salon.googleRating >= 1 &&
+    salon.googleRating <= 5
+      ? salon.googleRating
+      : null;
+  const reviewCount =
+    salon.googleReviewCount !== null &&
+    Number.isInteger(salon.googleReviewCount) &&
+    salon.googleReviewCount > 0
+      ? salon.googleReviewCount
+      : null;
+  if (rating !== null && reviewCount !== null) {
+    business.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: rating,
+      bestRating: 5,
+      worstRating: 1,
+      reviewCount,
+    };
+  }
+
   return (
     <>
       {jsonLdScript(business)}
