@@ -408,7 +408,15 @@ export function HomePage() {
           </ul>
           <p className="booking-line">
             Objednat se můžete{" "}
-            <a href={`tel:${PHONE_TEL}`}>telefonicky</a>, přes Messenger,{" "}
+            <a href={`tel:${PHONE_TEL}`}>telefonicky</a>, přes{" "}
+            {isFilled(salon.messengerUrl) ? (
+              <a href={salon.messengerUrl} target="_blank" rel="noopener noreferrer">
+                Messenger
+              </a>
+            ) : (
+              "Messenger"
+            )}
+            ,{" "}
             {isFilled(salon.whatsappChannelUrl) ? (
               <a href={salon.whatsappChannelUrl} target="_blank" rel="noopener noreferrer">
                 WhatsApp

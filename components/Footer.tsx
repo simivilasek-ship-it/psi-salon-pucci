@@ -4,7 +4,20 @@ import { isFilled, salon, socialLinks as salonSocialLinks } from "@/lib/salon";
 import { SITE_NAME } from "@/lib/site";
 
 function footerNote() {
-  return "Objednat se můžete telefonicky, přes Messenger, WhatsApp, Instagram nebo rezervační systém Reservio. Platba v\u00A0hotovosti nebo přes QR kód.";
+  const messenger = isFilled(salon.messengerUrl) ? (
+    <a href={salon.messengerUrl.trim()} target="_blank" rel="noopener noreferrer">
+      Messenger
+    </a>
+  ) : (
+    "Messenger"
+  );
+
+  return (
+    <>
+      Objednat se můžete telefonicky, přes {messenger}, WhatsApp, Instagram nebo rezervační systém Reservio. Platba
+      v&nbsp;hotovosti nebo přes QR kód.
+    </>
+  );
 }
 
 export function Footer() {

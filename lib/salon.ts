@@ -66,10 +66,10 @@ export const salon = {
   whatsappChannelUrl: "https://whatsapp.com/channel/0029VbCHGHMLSmbYkZR0zG04",
 
   /**
-   * Celé https URL Messengeru (m.me).
-   * Share odkaz na Facebook ani telefon z něj nejdou spolehlivě složit, proto zůstává prázdné.
+   * Messenger. Share odkaz nepřesměruje na facebook.com/uživatelské-jméno,
+   * jen na číselné ID stránky, proto tu není m.me. Odkaz vede na stejnou stránku.
    */
-  messengerUrl: "",
+  messengerUrl: "https://www.facebook.com/share/14thz84UbMH/",
 
   /**
    * Text otevírací doby od Kláry (24. 11. 2026).
