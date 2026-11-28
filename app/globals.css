@@ -1179,7 +1179,7 @@ th:last-child {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 32rem;
+  max-width: 920px;
   margin: 4px auto 0;
   text-align: center;
 }
@@ -1209,6 +1209,82 @@ th:last-child {
 .reviews-note {
   margin-top: 12px;
   color: var(--mid);
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 920px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.review-grid.is-one {
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 720px) {
+  .review-grid.is-two,
+  .review-grid:not(.is-one) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .review-grid:not(.is-one):not(.is-two) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.review-card {
+  height: 100%;
+  padding: 22px 22px 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.review-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.review-card-top h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.review-card-stars {
+  display: flex;
+  gap: 3px;
+  margin: 8px 0 0;
+  color: var(--brand);
+}
+
+.review-card-stars svg {
+  width: 16px;
+  height: 16px;
+}
+
+.review-card-source {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.review-card-text {
+  margin: 14px 0 0;
+  color: var(--mid);
+  line-height: 1.6;
 }
 
 .reviews-actions {

@@ -114,6 +114,36 @@ export function JsonLd() {
     };
   }
 
+  const reviewItems = salon.reviews
+    .filter(
+      (item) =>
+        item.name.trim() &&
+        item.text.trim() &&
+        Number.isFinite(item.rating) &&
+        item.rating >= 1 &&
+        item.rating <= 5,
+    )
+    .slice(0, 3);
+  if (reviewItems.length > 0) {
+    business.review = reviewItems.map((item) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: item.name.trim() },
+      reviewBody: item.text.trim(),
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: Math.round(item.rating),
+        bestRating: 5,
+        worstRating: 1,
+      },
+    }));
+  }
+
+  business.geo = {
+    "@type": "GeoCoordinates",
+    latitude: 49.755334,
+    longitude: 16.471355,
+  };
+
   return (
     <>
       {jsonLdScript(business)}

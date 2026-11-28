@@ -49,6 +49,23 @@ function reviewCountLabel(count: number) {
   return `${count} recenzí`;
 }
 
+const reviewCards = salon.reviews
+  .filter(
+    (item) =>
+      item.name.trim() &&
+      item.text.trim() &&
+      Number.isFinite(item.rating) &&
+      item.rating >= 1 &&
+      item.rating <= 5,
+  )
+  .slice(0, 3)
+  .map((item) => ({
+    name: item.name.trim(),
+    text: item.text.trim(),
+    source: (item.source ?? "Google").trim() || "Google",
+    rating: Math.round(item.rating),
+  }));
+
 const heroFacts = [
   { value: "Psi všech plemen", label: "i kočky" },
   { value: "Objednání", label: "Reservio nebo telefon" },
@@ -407,6 +424,44 @@ export function HomePage() {
                 ))}
               </p>
             )}
+
+            {reviewCards.length > 0 ? (
+              <ul
+                className={`review-grid${reviewCards.length === 1 ? " is-one" : reviewCards.length === 2 ? " is-two" : ""}`}
+                aria-label="Recenze z Google"
+              >
+                {reviewCards.map((review) => (
+                  <li key={`${review.name}-${review.text}`}>
+                    <article className="review-card">
+                      <div className="review-card-top">
+                        <div>
+                          <h3>{review.name}</h3>
+                          <p
+                            className="review-card-stars"
+                            aria-label={`${review.rating} z 5 hvězdiček`}
+                          >
+                            {Array.from({ length: 5 }, (_, index) => (
+                              <svg key={index} viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                  fill={index < review.rating ? "currentColor" : "none"}
+                                  stroke="currentColor"
+                                  strokeWidth={index < review.rating ? "0" : "1.5"}
+                                  strokeLinejoin="round"
+                                  d="M12 2.6l2.84 5.97 6.56.86-4.8 4.55 1.2 6.5L12 17.27 6.2 20.48l1.2-6.5-4.8-4.55 6.56-.86z"
+                                />
+                              </svg>
+                            ))}
+                          </p>
+                        </div>
+                        <span className="review-card-source">{review.source}</span>
+                      </div>
+                      <p className="review-card-text">{review.text}</p>
+                    </article>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+
             <div className="reviews-actions">
               <a className="btn btn-solid" href={googleReviewsHref} target="_blank" rel="noopener noreferrer">
                 Číst na Google

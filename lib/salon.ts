@@ -18,6 +18,17 @@ export type BeforeAfterPair = {
   altAfter: string;
 };
 
+export type ReviewItem = {
+  /** Jméno přesně jako na Google. */
+  name: string;
+  /** Doslovný text recenze. */
+  text: string;
+  /** Celé číslo 1–5. */
+  rating: number;
+  /** Zdroj, typicky „Google“. */
+  source?: string;
+};
+
 export const salon = {
   name: "Psí salon Pucci",
   owner: "Klára Zelinka, DiS",
@@ -57,11 +68,30 @@ export const salon = {
   googleRating: 5 as number | null,
   googleReviewCount: 2 as number | null,
 
+  /**
+   * Vybrané Google recenze (max 3). Prázdné = jen skóre a tlačítka.
+   * Texty a jména z Google Knowledge Panel (listopad 2026).
+   */
+  reviews: [
+    {
+      name: "Marie Markova",
+      source: "Google",
+      rating: 5,
+      text: "Paní je moc hodná a šikovná. Maxík byl vytrimován na jedničku. Pejsek i panička jsou moc spokojení. Doporučuji 🥰",
+    },
+    {
+      name: "Anna Faltýnková",
+      source: "Google",
+      rating: 5,
+      text: "Moc doporučuji!🤍",
+    },
+  ] as ReviewItem[],
+
   /** Celé https URL profilu. Prázdné = odkaz se neukáže. */
   instagramUrl: "https://www.instagram.com/psi_salon_pucci/",
 
-  /** Odkaz na Facebook od Kláry (24. 11. 2026). */
-  facebookUrl: "https://www.facebook.com/share/14thz84UbMH/",
+  /** Facebook stránka salonu (ID z Google Knowledge Panel). */
+  facebookUrl: "https://www.facebook.com/profile.php?id=61557338694890",
 
   /**
    * Číslo pro osobní WhatsApp, např. "+420722447002".
