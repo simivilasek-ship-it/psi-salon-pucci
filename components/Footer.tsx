@@ -3,23 +3,6 @@ import { withBase } from "@/lib/paths";
 import { isFilled, salon, socialLinks as salonSocialLinks } from "@/lib/salon";
 import { SITE_NAME } from "@/lib/site";
 
-function footerNote() {
-  const messenger = isFilled(salon.messengerUrl) ? (
-    <a href={salon.messengerUrl.trim()} target="_blank" rel="noopener noreferrer">
-      Messenger
-    </a>
-  ) : (
-    "Messenger"
-  );
-
-  return (
-    <>
-      Objednat se můžete telefonicky, přes {messenger}, WhatsApp, Instagram nebo rezervační systém Reservio. Platba
-      v&nbsp;hotovosti nebo přes QR kód.
-    </>
-  );
-}
-
 export function Footer() {
   const year = new Date().getFullYear();
   const whatsapp = salonSocialLinks().find((link) => link.label === "WhatsApp");
@@ -65,22 +48,18 @@ export function Footer() {
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
               </dd>
             </div>
-            {links.length > 0 ? (
-              <div>
-                <dt>Sítě</dt>
-                <dd>
-                  {links.map((link, index) => (
-                    <span key={link.label}>
-                      {index > 0 ? " · " : null}
-                      <a href={link.href} target="_blank" rel="noopener noreferrer">
-                        {link.label}
-                      </a>
-                    </span>
-                  ))}
-                </dd>
-              </div>
-            ) : null}
           </dl>
+          {links.length > 0 ? (
+            <ul className="footer-socials" aria-label="Sociální sítě">
+              {links.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} target="_blank" rel="noopener noreferrer">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
         <div className="footer-side">
           <nav className="footer-nav" aria-label="Patička">
@@ -95,7 +74,9 @@ export function Footer() {
               </li>
             </ul>
           </nav>
-          <p className="footer-note">{footerNote()}</p>
+          <p className="footer-note">
+            Objednání telefonicky nebo přes Reservio. Platba v&nbsp;hotovosti nebo přes QR kód.
+          </p>
         </div>
       </div>
       <div className="wrap footer-bottom">

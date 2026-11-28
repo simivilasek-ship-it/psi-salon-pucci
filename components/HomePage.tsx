@@ -514,35 +514,11 @@ export function HomePage() {
           </ul>
           <p className="booking-line">
             Objednat se můžete{" "}
-            <a href={`tel:${PHONE_TEL}`}>telefonicky</a>, přes{" "}
-            {isFilled(salon.messengerUrl) ? (
-              <a href={salon.messengerUrl} target="_blank" rel="noopener noreferrer">
-                Messenger
-              </a>
-            ) : (
-              "Messenger"
-            )}
-            ,{" "}
-            {isFilled(salon.whatsappChannelUrl) ? (
-              <a href={salon.whatsappChannelUrl} target="_blank" rel="noopener noreferrer">
-                WhatsApp
-              </a>
-            ) : (
-              "WhatsApp"
-            )}
-            ,{" "}
-            {isFilled(salon.instagramUrl) ? (
-              <a href={salon.instagramUrl} target="_blank" rel="noopener noreferrer">
-                Instagram
-              </a>
-            ) : (
-              "Instagram"
-            )}{" "}
-            nebo rezervační systém{" "}
+            <a href={`tel:${PHONE_TEL}`}>telefonicky</a> nebo přes{" "}
             <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
               Reservio
             </a>
-            .
+            . Další kontakty jsou v&nbsp;sekci Kontakt.
           </p>
         </div>
       </section>
