@@ -48,7 +48,7 @@ export const salon = {
    * Po vyplnění a pushi na main zmizí basePath /psi-salon-pucci, do out/ se zapíše CNAME
    * a kanonické URL i sitemap použijí https://tato-domena.
    */
-  customDomain: "",
+  customDomain: "psisalonpucci.cz",
 
   /**
    * Položky ceníku. Prázdné = žádná tabulka, u služeb zůstane „cena dle plemene“.
